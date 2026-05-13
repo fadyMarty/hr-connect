@@ -1,0 +1,3 @@
+[submodule "hr-connect-uikit"]
+	path = hr-connect-uikit
+	url = https://github.com/fadyMarty/hr-connect-uikit.git
