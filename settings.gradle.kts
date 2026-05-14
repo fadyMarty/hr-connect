@@ -22,10 +22,19 @@ dependencyResolutionManagement {
     }
 }
 
-ProcessBuilder("git", "submodule", "update", "--init", "--recursive")
-    .directory(rootDir)
-    .start()
-    .waitFor()
+val submodules = listOf("hr-connect-uikit")
+
+val emptySubmodules = submodules.filter { path ->
+    val dir = File(rootDir, path)
+    dir.listFiles().isNullOrEmpty()
+}
+
+if (emptySubmodules.isNotEmpty()) {
+    ProcessBuilder("git", "submodule", "update", "--init", "--recursive")
+        .directory(rootDir)
+        .start()
+        .waitFor()
+}
 
 rootProject.name = "HR Connect"
 include(":app")

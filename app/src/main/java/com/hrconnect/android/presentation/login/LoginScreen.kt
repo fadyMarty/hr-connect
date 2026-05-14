@@ -209,7 +209,7 @@ fun LoginScreen(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun LoginScreenPreview() {
     HrTheme {

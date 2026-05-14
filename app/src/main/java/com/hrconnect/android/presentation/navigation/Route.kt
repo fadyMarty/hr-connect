@@ -20,11 +20,11 @@ sealed interface Route {
     data object HomeGraph : Route
 
     @Serializable
-    data object VacancyList : Route
+    data object HrBoard : Route
 
     @Serializable
     data object CandidateList : Route
 
     @Serializable
-    data object Profile : Route
+    data object VacancyList : Route
 }

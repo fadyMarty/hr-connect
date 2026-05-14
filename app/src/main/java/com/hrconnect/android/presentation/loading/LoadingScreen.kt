@@ -97,7 +97,7 @@ fun LoadingScreen(
                     .fillMaxWidth()
                     .height(4.dp),
                 color = HrTheme.colorScheme.primaryVariant,
-                trackColor = HrTheme.colorScheme.progressTrack,
+                trackColor = HrTheme.colorScheme.indicatorTrack,
                 gapSize = (-2).dp,
                 drawStopIndicator = {}
             )
@@ -129,7 +129,7 @@ fun LoadingScreen(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun LoadingScreenPreview() {
     HrTheme {

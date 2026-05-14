@@ -243,7 +243,7 @@ fun RegisterScreen(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun RegisterScreenPreview() {
     HrTheme {

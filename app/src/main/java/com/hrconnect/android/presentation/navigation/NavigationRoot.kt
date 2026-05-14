@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.hrconnect.android.presentation.home.HomeGraph
 import com.hrconnect.android.presentation.loading.LoadingRoot
 import com.hrconnect.android.presentation.login.LoginRoot
 import com.hrconnect.android.presentation.register.RegisterRoot
@@ -51,7 +52,7 @@ fun NavigationRoot() {
             }
         }
         composable<Route.HomeGraph> {
-
+            HomeGraph()
         }
     }
 }
