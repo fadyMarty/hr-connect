@@ -19,18 +19,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.hrconnect.android.R
+import com.hrconnect.android.common.Constants
 import com.hrconnect.android.presentation.util.ObserveAsEvents
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
 import com.hrconnect.uikit.presentation.components.buttons.PrimaryButton
+import com.hrconnect.uikit.presentation.components.checkbox.HrCheckbox
 import com.hrconnect.uikit.presentation.components.inputs.Input
 import com.hrconnect.uikit.presentation.components.inputs.PasswordInput
 import org.koin.compose.viewmodel.koinViewModel
@@ -151,6 +161,7 @@ fun RegisterScreen(
                         label = "Password",
                         placeholder = "••••••••",
                         supportingText = "Minimum 8 characters",
+                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
                         isError = !state.isPasswordValid
                     )
                     PasswordInput(
@@ -164,7 +175,33 @@ fun RegisterScreen(
                         supportingText = if (!state.isConfirmPasswordValid) {
                             "Passwords do not match"
                         } else null,
+                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
                         isError = !state.isConfirmPasswordValid
+                    )
+                    HrCheckbox(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 27.62.dp),
+                        checked = state.acceptedTerms,
+                        onCheckedChange = {
+                            onEvent(RegisterEvent.OnAcceptTerms(it))
+                        },
+                        label = buildAnnotatedString {
+                            append("I agree to the ")
+                            withLink(
+                                link = LinkAnnotation.Url(
+                                    url = Constants.TERMS_OF_USE_URL,
+                                    styles = TextLinkStyles(
+                                        style = SpanStyle(
+                                            color = HrTheme.colorScheme.primaryVariant
+                                        )
+                                    )
+                                )
+                            ) {
+                                append("terms of use")
+                            }
+                            append(" and privacy policy.")
+                        }
                     )
                     PrimaryButton(
                         modifier = Modifier.padding(vertical = 16.dp),

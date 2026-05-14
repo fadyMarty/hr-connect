@@ -34,14 +34,14 @@ class RegisterViewModel(
             RegisterEvent.OnToggleConfirmPasswordVisibility -> {
                 _state.update {
                     it.copy(
-                        isConfirmPasswordValid = !it.isConfirmPasswordValid
+                        isConfirmPasswordVisible = !it.isConfirmPasswordVisible
                     )
                 }
             }
             is RegisterEvent.OnAcceptTerms -> {
                 _state.update {
                     it.copy(
-                        isTermsAccepted = event.isAccepted
+                        acceptedTerms = event.isAccepted
                     )
                 }
             }

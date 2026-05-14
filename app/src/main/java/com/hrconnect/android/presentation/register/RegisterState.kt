@@ -15,5 +15,5 @@ data class RegisterState(
     val confirmPasswordState: TextFieldState = TextFieldState(),
     val isConfirmPasswordVisible: Boolean = false,
     val isConfirmPasswordValid: Boolean = true,
-    val isTermsAccepted: Boolean = false,
+    val acceptedTerms: Boolean = false,
 )
