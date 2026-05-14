@@ -97,7 +97,7 @@ fun LoadingScreen(
                     .fillMaxWidth()
                     .height(4.dp),
                 color = HrTheme.colorScheme.primaryVariant,
-                trackColor = HrTheme.colorScheme.indicatorTrack,
+                trackColor = HrTheme.colorScheme.progressTrack,
                 gapSize = (-2).dp,
                 drawStopIndicator = {}
             )

@@ -154,7 +154,7 @@ fun LoginScreen(
                         )
                         .border(
                             width = 1.dp,
-                            color = HrTheme.colorScheme.strokeVariant,
+                            color = HrTheme.colorScheme.containerBorder,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .padding(horizontal = 24.dp)
