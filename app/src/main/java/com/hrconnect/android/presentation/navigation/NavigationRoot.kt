@@ -5,6 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.hrconnect.android.presentation.loading.LoadingRoot
+import com.hrconnect.android.presentation.login.LoginRoot
 import com.hrconnect.android.presentation.register.RegisterRoot
 
 @Composable
@@ -20,18 +22,36 @@ fun NavigationRoot() {
         ) {
             composable<Route.Register> {
                 RegisterRoot(
-                    onRegisterSuccess = {
-                        navController.navigate(Route.HomeGraph) {
-                            popUpTo(Route.AuthGraph) {
-                                inclusive = true
-                            }
-                        }
-                    },
                     onLoginClick = {
                         navController.navigate(Route.Login)
                     }
                 )
             }
+            composable<Route.Login> {
+                LoginRoot(
+                    onLoginSuccess = {
+                        navController.navigate(Route.Loading) {
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
+            composable<Route.Loading> {
+                LoadingRoot(
+                    onLoadingSuccess = {
+                        navController.navigate(Route.HomeGraph) {
+                            popUpTo(Route.AuthGraph) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
+        }
+        composable<Route.HomeGraph> {
+
         }
     }
 }

@@ -14,8 +14,17 @@ sealed interface Route {
     data object Login : Route
 
     @Serializable
-    data object PostLoginLoading : Route
+    data object Loading : Route
 
     @Serializable
     data object HomeGraph : Route
+
+    @Serializable
+    data object VacancyList : Route
+
+    @Serializable
+    data object CandidateList : Route
+
+    @Serializable
+    data object Profile : Route
 }

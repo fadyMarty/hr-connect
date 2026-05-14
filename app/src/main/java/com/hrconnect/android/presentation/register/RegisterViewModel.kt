@@ -45,9 +45,7 @@ class RegisterViewModel(
                     )
                 }
             }
-            RegisterEvent.OnRegisterClick -> {
-                register()
-            }
+            RegisterEvent.OnRegisterClick -> register()
             else -> Unit
         }
     }
@@ -85,6 +83,10 @@ class RegisterViewModel(
             )
         }
 
-        return isFirstNameValid && isLastNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
+        return isFirstNameValid &&
+                isLastNameValid &&
+                isEmailValid &&
+                isPasswordValid &&
+                isConfirmPasswordValid
     }
 }

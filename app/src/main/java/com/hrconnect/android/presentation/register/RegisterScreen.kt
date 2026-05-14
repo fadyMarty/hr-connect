@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -48,14 +49,13 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun RegisterRoot(
     viewModel: RegisterViewModel = koinViewModel(),
-    onRegisterSuccess: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
-            RegisterEvent.Success -> onRegisterSuccess()
+            RegisterEvent.Success -> onLoginClick()
             else -> Unit
         }
     }
@@ -83,7 +83,7 @@ fun RegisterScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 20.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Column(
                 modifier = Modifier
@@ -99,7 +99,8 @@ fun RegisterScreen(
                     .clip(RoundedCornerShape(12.dp))
                     .background(HrTheme.colorScheme.container)
                     .padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp)
+                verticalArrangement = Arrangement.spacedBy(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -107,7 +108,7 @@ fun RegisterScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "HR Connect",
+                        text = stringResource(R.string.app_name),
                         style = TextStyle(
                             fontFamily = Manrope,
                             fontWeight = FontWeight.Bold,
@@ -208,9 +209,35 @@ fun RegisterScreen(
                         label = "Register",
                         onClick = {
                             onEvent(RegisterEvent.OnRegisterClick)
-                        }
+                        },
+                        enabled = state.firstNameState.text.isNotBlank() &&
+                                state.lastNameState.text.isNotBlank() &&
+                                state.emailState.text.isNotBlank() &&
+                                state.passwordState.text.isNotBlank() &&
+                                state.confirmPasswordState.text.isNotBlank() &&
+                                state.acceptedTerms
                     )
                 }
+                Text(
+                    text = buildAnnotatedString {
+                        append("Already have an account? ")
+                        withLink(
+                            link = LinkAnnotation.Clickable(
+                                tag = "login",
+                                styles = TextLinkStyles(
+                                    style = SpanStyle(
+                                        color = HrTheme.colorScheme.primaryVariant
+                                    )
+                                )
+                            ) {
+                                onEvent(RegisterEvent.OnLoginClick)
+                            }
+                        ) {
+                            append("Sign in")
+                        }
+                    },
+                    style = HrTheme.typography.bodySmall
+                )
             }
         }
     }
