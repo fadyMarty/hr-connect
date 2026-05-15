@@ -1,0 +1,133 @@
+package com.hrconnect.android.presentation.home
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.hrconnect.android.R
+import com.hrconnect.android.presentation.navigation.Route
+import com.hrconnect.android.presentation.vacancy_list.VacancyListRoot
+import com.hrconnect.uikit.common.theme.HrTheme
+import com.hrconnect.uikit.presentation.components.bottom_bar.BottomBar
+import com.hrconnect.uikit.presentation.components.bottom_bar.BottomBarItem
+
+@Composable
+fun HomeGraph() {
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    Scaffold(
+        contentWindowInsets = WindowInsets.navigationBars,
+        bottomBar = {
+            BottomBar(
+                modifier = Modifier.windowInsetsPadding(
+                    insets = WindowInsets.navigationBars
+                        .union(WindowInsets.displayCutout)
+                ),
+                items = listOf(
+                    BottomBarItem(
+                        selected = currentDestination.isSelected(Route.HrBoard),
+                        icon = ImageVector.vectorResource(R.drawable.ic_dashboard),
+                        label = "Board",
+                        route = Route.HrBoard
+                    ),
+                    BottomBarItem(
+                        selected = currentDestination.isSelected(Route.CandidateList),
+                        icon = ImageVector.vectorResource(R.drawable.ic_groups),
+                        label = "Candidates",
+                        route = Route.CandidateList
+                    ),
+                    BottomBarItem(
+                        selected = currentDestination.isSelected(Route.VacancyList),
+                        icon = ImageVector.vectorResource(R.drawable.ic_work),
+                        label = "Vacancies",
+                        route = Route.VacancyList
+                    )
+                ),
+                onItemClick = { item ->
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            NavHost(
+                modifier = Modifier.fillMaxSize(),
+                navController = navController,
+                startDestination = Route.HrBoard
+            ) {
+                composable<Route.HrBoard> {
+
+                }
+                composable<Route.CandidateList> {
+
+                }
+                composable<Route.VacancyList> {
+                    VacancyListRoot()
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(
+                        end = 20.dp,
+                        bottom = 40.5.dp
+                    )
+                    .size(56.dp)
+                    .clip(CircleShape)
+                    .background(HrTheme.colorScheme.primaryVariant)
+                    .clickable {},
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    modifier = Modifier.size(25.67.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_ai),
+                    contentDescription = null,
+                    tint = HrTheme.colorScheme.onPrimary
+                )
+            }
+        }
+    }
+}
+
+private fun NavDestination?.isSelected(route: Route): Boolean {
+    return this?.hierarchy?.any {
+        it.route == route::class.qualifiedName
+    } == true
+}
