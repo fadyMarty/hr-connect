@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.hrconnect.android.presentation.assistant.AssistantRoot
 import com.hrconnect.android.presentation.home.HomeGraph
 import com.hrconnect.android.presentation.loading.LoadingRoot
 import com.hrconnect.android.presentation.login.LoginRoot
@@ -16,7 +17,7 @@ fun NavigationRoot() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.AuthGraph
+        startDestination = Route.HomeGraph
     ) {
         navigation<Route.AuthGraph>(
             startDestination = Route.Register
@@ -52,7 +53,18 @@ fun NavigationRoot() {
             }
         }
         composable<Route.HomeGraph> {
-            HomeGraph()
+            HomeGraph(
+                onAssistantClick = {
+                    navController.navigate(Route.Assistant)
+                }
+            )
+        }
+        composable<Route.Assistant> {
+            AssistantRoot(
+                onCloseClick = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

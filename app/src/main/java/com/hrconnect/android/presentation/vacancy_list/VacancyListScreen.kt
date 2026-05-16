@@ -9,16 +9,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.union
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,7 +40,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hrconnect.android.R
 import com.hrconnect.android.domain.model.Vacancy
-import com.hrconnect.android.presentation.components.HomeScaffold
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
 import com.hrconnect.uikit.presentation.components.buttons.PrimaryButton
@@ -69,60 +63,56 @@ fun VacancyListRoot(
 fun VacancyListScreen(
     state: VacancyListState,
 ) {
-    HomeScaffold(
-        topBar = {
-            Column(
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(HrTheme.colorScheme.container)
+        ) {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .windowInsetsPadding(
-                        insets = WindowInsets.statusBars
-                            .union(WindowInsets.displayCutout)
-                    )
+                    .height(64.dp)
+                    .padding(horizontal = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                        .padding(horizontal = 20.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Vacancies",
-                        style = TextStyle(
-                            fontFamily = Manrope,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontSize = 20.sp,
-                            lineHeight = 28.sp,
-                            letterSpacing = 0.sp,
-                            color = HrTheme.colorScheme.topBarTitle
-                        )
+                Text(
+                    text = "Vacancies",
+                    style = TextStyle(
+                        fontFamily = Manrope,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 20.sp,
+                        lineHeight = 28.sp,
+                        letterSpacing = 0.sp,
+                        color = HrTheme.colorScheme.topBarTitle
                     )
-                    Box(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .clickable(
-                                interactionSource = null,
-                                indication = ripple(bounded = false)
-                            ) {}
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(20.1.dp, 20.dp),
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
-                            contentDescription = null,
-                            tint = Color(0xFF64748B)
-                        )
-                    }
-                }
-                HorizontalDivider(
-                    thickness = 1.dp,
-                    color = Color(0xFFE2E8F0)
                 )
+                Box(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable(
+                            interactionSource = null,
+                            indication = ripple(bounded = false)
+                        ) {}
+                ) {
+                    Icon(
+                        modifier = Modifier.size(20.1.dp, 20.dp),
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
+                        contentDescription = null,
+                        tint = Color(0xFF64748B)
+                    )
+                }
             }
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color(0xFFE2E8F0)
+            )
         }
-    ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(
                 horizontal = 20.dp,
                 vertical = 24.dp

@@ -4,12 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -37,19 +35,17 @@ import com.hrconnect.uikit.presentation.components.bottom_bar.BottomBar
 import com.hrconnect.uikit.presentation.components.bottom_bar.BottomBarItem
 
 @Composable
-fun HomeGraph() {
+fun HomeGraph(
+    onAssistantClick: () -> Unit,
+) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     Scaffold(
-        contentWindowInsets = WindowInsets.navigationBars,
         bottomBar = {
             BottomBar(
-                modifier = Modifier.windowInsetsPadding(
-                    insets = WindowInsets.navigationBars
-                        .union(WindowInsets.displayCutout)
-                ),
+                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars),
                 items = listOf(
                     BottomBarItem(
                         selected = currentDestination.isSelected(Route.HrBoard),
@@ -112,12 +108,12 @@ fun HomeGraph() {
                     .size(56.dp)
                     .clip(CircleShape)
                     .background(HrTheme.colorScheme.primaryVariant)
-                    .clickable {},
+                    .clickable(onClick = onAssistantClick),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     modifier = Modifier.size(25.67.dp),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_ai),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_assistant),
                     contentDescription = null,
                     tint = HrTheme.colorScheme.onPrimary
                 )

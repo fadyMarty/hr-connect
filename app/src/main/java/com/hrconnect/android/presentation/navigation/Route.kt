@@ -27,4 +27,7 @@ sealed interface Route {
 
     @Serializable
     data object VacancyList : Route
+
+    @Serializable
+    data object Assistant : Route
 }

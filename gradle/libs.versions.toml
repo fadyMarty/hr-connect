@@ -9,11 +9,13 @@ activityCompose = "1.13.0"
 kotlin = "2.3.21"
 composeBom = "2026.05.00"
 appcompat = "1.7.1"
-material = "1.13.0"
+material = "1.14.0"
 
-koinBom = "4.2.0"
+koinBom = "4.2.1"
+timber = "5.0.1"
 navigationCompose = "2.9.8"
 coil = "3.4.0"
+llamatik = "1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +42,7 @@ koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-view
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+llamatik-library = { module = "com.llamatik:library", version.ref = "llamatik" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
