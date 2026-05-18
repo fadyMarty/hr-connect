@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,7 +38,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
 }
 
@@ -58,12 +58,32 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
+    // App
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
     implementation(libs.koin.compose.viewmodel.navigation)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.llamatik.library)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.imagepickerkmp)
+    implementation(libs.llamatik)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.logcat)
+    implementation(libs.pdf.viewer)
+    implementation(libs.appmetrica.analytics)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.truth)
 
     implementation(project(":uikit"))
+    implementation(project(":netlib"))
 }

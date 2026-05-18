@@ -2,6 +2,7 @@ package com.hrconnect.android.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hrconnect.netlib.auth.domain.repository.AuthRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +10,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(
+    private val authRepository: AuthRepository,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
@@ -44,7 +47,14 @@ class LoginViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            eventChannel.send(LoginEvent.Success)
+            authRepository
+                .login(
+                    username = state.value.emailState.text.toString(),
+                    password = state.value.passwordState.text.toString(),
+                    rememberUser = state.value.rememberUser
+                ).onSuccess {
+                    eventChannel.send(LoginEvent.Success)
+                }
         }
     }
 

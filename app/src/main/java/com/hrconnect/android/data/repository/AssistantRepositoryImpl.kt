@@ -38,8 +38,8 @@ class AssistantRepositoryImpl(
                 system = "You are a helpful HR assistant.",
                 context = "",
                 user = prompt,
-                onDelta = { delta ->
-                    trySend(AssistantResult.Delta(delta))
+                onDelta = { text ->
+                    trySend(AssistantResult.Delta(text))
                 },
                 onDone = {
                     close()

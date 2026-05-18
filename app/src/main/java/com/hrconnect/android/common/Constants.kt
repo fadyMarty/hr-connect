@@ -6,5 +6,5 @@ object Constants {
 
     const val FORGOT_PASSWORD_URL = "https://myaccount.google.com/signinoptions/password"
 
-    const val MODEL_FILE_NAME = "qwen2.5-0.5b-instruct-q4_k_m.gguf"
+    const val MODEL_FILE_NAME = "SmolLM2-135M-Instruct-Q4_K_M.gguf"
 }

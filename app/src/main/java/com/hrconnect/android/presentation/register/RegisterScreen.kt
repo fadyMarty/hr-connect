@@ -150,7 +150,6 @@ fun RegisterScreen(
                     Input(
                         state = state.emailState,
                         label = "Email",
-                        supportingText = "Lowercase letters and digits only (name@domain.ru)",
                         isError = !state.isEmailValid
                     )
                     PasswordInput(
@@ -161,7 +160,6 @@ fun RegisterScreen(
                         },
                         label = "Password",
                         placeholder = "••••••••",
-                        supportingText = "Minimum 8 characters",
                         leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
                         isError = !state.isPasswordValid
                     )
@@ -173,9 +171,6 @@ fun RegisterScreen(
                         },
                         label = "Confirm Password",
                         placeholder = "••••••••",
-                        supportingText = if (!state.isConfirmPasswordValid) {
-                            "Passwords do not match"
-                        } else null,
                         leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
                         isError = !state.isConfirmPasswordValid
                     )

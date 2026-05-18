@@ -22,7 +22,10 @@ dependencyResolutionManagement {
     }
 }
 
-val submodules = listOf("hr-connect-uikit")
+val submodules = listOf(
+    "hr-connect-uikit",
+    "hr-connect-netlib"
+)
 
 val emptySubmodules = submodules.filter { path ->
     val dir = File(rootDir, path)
@@ -41,3 +44,6 @@ include(":app")
 
 include(":uikit")
 project(":uikit").projectDir = File("hr-connect-uikit/uikit")
+
+include(":netlib")
+project(":netlib").projectDir = File("hr-connect-netlib/netlib")

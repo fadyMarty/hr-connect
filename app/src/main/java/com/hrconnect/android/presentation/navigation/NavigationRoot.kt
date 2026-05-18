@@ -1,10 +1,10 @@
 package com.hrconnect.android.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.compose.rememberNavController
 import com.hrconnect.android.presentation.assistant.AssistantRoot
 import com.hrconnect.android.presentation.home.HomeGraph
 import com.hrconnect.android.presentation.loading.LoadingRoot
@@ -12,12 +12,13 @@ import com.hrconnect.android.presentation.login.LoginRoot
 import com.hrconnect.android.presentation.register.RegisterRoot
 
 @Composable
-fun NavigationRoot() {
-    val navController = rememberNavController()
-
+fun NavigationRoot(
+    navController: NavHostController,
+    startDestination: Any,
+) {
     NavHost(
         navController = navController,
-        startDestination = Route.HomeGraph
+        startDestination = startDestination
     ) {
         navigation<Route.AuthGraph>(
             startDestination = Route.Register
