@@ -53,6 +53,24 @@ class RegisterViewModel(
     }
 
     private fun register() {
+        if (!validateFormInputs()) {
+            return
+        }
+
+        viewModelScope.launch {
+            authRepository.register()
+                .onSuccess {
+                    eventChannel.send(RegisterEvent.OnSuccess)
+                }
+                .onFailure { e ->
+                    if (e is HttpException) {
+                        eventChannel.send(RegisterEvent.OnError(e.message()))
+                    }
+                }
+        }
+    }
+
+    private fun validateFormInputs(): Boolean {
         val currentState = state.value
         val email = currentState.emailState.text.toString()
         val password = currentState.passwordState.text.toString()
@@ -83,20 +101,6 @@ class RegisterViewModel(
             )
         }
 
-        if (!(isEmailValid && isPasswordValid && isConfirmPasswordValid)) {
-            return
-        }
-
-        viewModelScope.launch {
-            authRepository.register()
-                .onSuccess {
-                    eventChannel.send(RegisterEvent.OnSuccess)
-                }
-                .onFailure { e ->
-                    if (e is HttpException) {
-                        eventChannel.send(RegisterEvent.OnError(e.message()))
-                    }
-                }
-        }
+        return isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 }
