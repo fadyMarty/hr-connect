@@ -55,7 +55,7 @@ fun RegisterRoot(
 
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
-            RegisterEvent.Success -> onLoginClick()
+            RegisterEvent.OnSuccess -> onLoginClick()
             else -> Unit
         }
     }
@@ -150,7 +150,7 @@ fun RegisterScreen(
                     Input(
                         state = state.emailState,
                         label = "Email",
-                        isError = !state.isEmailValid
+                        supportingText = null
                     )
                     PasswordInput(
                         state = state.passwordState,
@@ -160,8 +160,8 @@ fun RegisterScreen(
                         },
                         label = "Password",
                         placeholder = "••••••••",
-                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
-                        isError = !state.isPasswordValid
+                        supportingText = null,
+                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock)
                     )
                     PasswordInput(
                         state = state.confirmPasswordState,
@@ -171,8 +171,8 @@ fun RegisterScreen(
                         },
                         label = "Confirm Password",
                         placeholder = "••••••••",
-                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
-                        isError = !state.isConfirmPasswordValid
+                        supportingText = null,
+                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock)
                     )
                     HrCheckbox(
                         modifier = Modifier

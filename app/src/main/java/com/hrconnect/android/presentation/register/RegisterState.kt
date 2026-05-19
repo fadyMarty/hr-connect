@@ -1,5 +1,6 @@
 package com.hrconnect.android.presentation.register
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.text.input.TextFieldState
 
 data class RegisterState(
@@ -8,12 +9,12 @@ data class RegisterState(
     val lastNameState: TextFieldState = TextFieldState(),
     val isLastNameValid: Boolean = true,
     val emailState: TextFieldState = TextFieldState(),
-    val isEmailValid: Boolean = true,
+    @StringRes val emailError: Int? = null,
     val passwordState: TextFieldState = TextFieldState(),
     val isPasswordVisible: Boolean = false,
-    val isPasswordValid: Boolean = true,
+    @StringRes val passwordError: Int? = null,
     val confirmPasswordState: TextFieldState = TextFieldState(),
     val isConfirmPasswordVisible: Boolean = false,
-    val isConfirmPasswordValid: Boolean = true,
+    @StringRes val confirmPasswordError: Int? = null,
     val acceptedTerms: Boolean = false,
 )

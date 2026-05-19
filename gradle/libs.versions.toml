@@ -23,11 +23,12 @@ coreSplashscreen = "1.2.0"
 logcat = "0.4"
 pdfViewer = "2.4.0"
 appmetricaAnalytics = "8.2.0"
-kotlinxCoroutinesTest = "1.11.0"
-truth = "1.4.5"
 ksp = "2.3.4"
 room = "2.8.4"
 paging = "3.5.0"
+kotlinxCoroutinesTest = "1.11.0"
+mockk = "1.14.9"
+truth = "1.4.5"
 
 # NetLib
 #koinBom = "4.2.1"
@@ -73,14 +74,15 @@ androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", versi
 logcat = { module = "com.squareup.logcat:logcat", version.ref = "logcat" }
 pdf-viewer = { module = "io.github.afreakyelf:Pdf-Viewer", version.ref = "pdfViewer" }
 appmetrica-analytics = { module = "io.appmetrica.analytics:analytics", version.ref = "appmetricaAnalytics" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
-truth = { module = "com.google.truth:truth", version.ref = "truth" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
 
 # NetLib
 #koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
