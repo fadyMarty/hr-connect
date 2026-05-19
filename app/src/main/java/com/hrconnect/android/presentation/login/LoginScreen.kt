@@ -38,8 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hrconnect.android.R
-import com.hrconnect.android.common.Constants
-import com.hrconnect.android.presentation.util.ObserveAsEvents
+import com.hrconnect.android.common.util.Constants
+import com.hrconnect.android.common.util.ObserveAsEvents
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
 import com.hrconnect.uikit.presentation.components.buttons.PrimaryButton
@@ -57,7 +57,7 @@ fun LoginRoot(
 
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
-            LoginEvent.Success -> onLoginSuccess()
+            LoginEvent.OnSuccess -> onLoginSuccess()
             else -> Unit
         }
     }

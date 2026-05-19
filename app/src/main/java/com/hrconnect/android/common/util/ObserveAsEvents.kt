@@ -1,4 +1,4 @@
-package com.hrconnect.android.presentation.util
+package com.hrconnect.android.common.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

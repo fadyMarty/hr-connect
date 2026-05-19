@@ -1,7 +1,7 @@
 package com.hrconnect.android.data.repository
 
 import android.content.Context
-import com.hrconnect.android.common.Constants
+import com.hrconnect.android.common.util.Constants
 import com.hrconnect.android.data.util.AssistantResult
 import com.hrconnect.android.domain.repository.AssistantRepository
 import com.llamatik.library.platform.LlamaBridge

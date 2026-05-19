@@ -53,7 +53,7 @@ class LoginViewModel(
                     password = state.value.passwordState.text.toString(),
                     rememberUser = state.value.rememberUser
                 ).onSuccess {
-                    eventChannel.send(LoginEvent.Success)
+                    eventChannel.send(LoginEvent.OnSuccess)
                 }
         }
     }

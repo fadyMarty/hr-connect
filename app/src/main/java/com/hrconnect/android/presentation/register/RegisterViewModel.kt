@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 
 class RegisterViewModel(
     private val authRepository: AuthRepository,
-    private val validator: RegisterValidator,
+    private val registerValidator: RegisterValidator,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RegisterState())
@@ -20,14 +20,6 @@ class RegisterViewModel(
     val events = eventChannel.receiveAsFlow()
 
     fun onEvent(event: RegisterEvent) {
-        TODO()
-    }
-
-    private fun register() {
-        TODO()
-    }
-
-    private fun validateFormInputs(): Boolean {
         TODO()
     }
 }

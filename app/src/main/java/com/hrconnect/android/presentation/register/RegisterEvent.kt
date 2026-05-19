@@ -7,5 +7,5 @@ sealed interface RegisterEvent {
     data class OnAcceptTerms(val isAccepted: Boolean) : RegisterEvent
     data object OnLoginClick : RegisterEvent
     data object OnSuccess : RegisterEvent
-    data object OnError : RegisterEvent
+    data class OnError(val message: String) : RegisterEvent
 }
