@@ -5,17 +5,18 @@ import com.hrconnect.android.domain.validator.RegisterValidator
 class RegisterValidatorImpl : RegisterValidator {
 
     override fun validateEmail(email: String): Boolean {
-        TODO("Not yet implemented")
+        val emailPattern = "^[a-z0-9]+@[a-z0-9]+\\.[a-z]+$"
+        return emailPattern.toRegex().matches(email)
     }
 
     override fun validatePassword(password: String): Boolean {
-        TODO("Not yet implemented")
+        return password.length >= 8
     }
 
     override fun validateConfirmPassword(
         password: String,
         confirmPassword: String,
     ): Boolean {
-        TODO("Not yet implemented")
+        return password == confirmPassword
     }
 }
