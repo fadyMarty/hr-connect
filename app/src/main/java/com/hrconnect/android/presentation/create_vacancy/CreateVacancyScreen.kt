@@ -18,14 +18,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.hrconnect.android.presentation.create_vacancy.components.CreateVacancyBottomBar
+import com.hrconnect.android.presentation.create_vacancy.components.CreateVacancyFirstStep
 import com.hrconnect.android.presentation.create_vacancy.components.CreateVacancyTopBar
-import com.hrconnect.android.presentation.create_vacancy.components.FirstStepPage
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.presentation.components.progress_bar.ProgressBar
+import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -53,6 +56,7 @@ fun CreateVacancyScreen(
     onEvent: (CreateVacancyEvent) -> Unit,
 ) {
     val pagerState = rememberPagerState { 3 }
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -109,12 +113,22 @@ fun CreateVacancyScreen(
                 state = pagerState
             ) { index ->
                 when (index) {
-                    0 -> FirstStepPage(
+                    0 -> CreateVacancyFirstStep(
                         state = state,
                         onEvent = onEvent
                     )
                 }
             }
+            CreateVacancyBottomBar(
+                onSaveDraftClick = {},
+                onContinueClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(
+                            page = pagerState.currentPage + 1
+                        )
+                    }
+                }
+            )
         }
     }
 }

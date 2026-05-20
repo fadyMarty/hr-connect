@@ -46,7 +46,7 @@ import com.hrconnect.uikit.presentation.components.inputs.Input
 import com.hrconnect.uikit.presentation.components.select.Select
 
 @Composable
-fun FirstStepPage(
+fun CreateVacancyFirstStep(
     state: CreateVacancyState,
     onEvent: (CreateVacancyEvent) -> Unit,
     modifier: Modifier = Modifier,
@@ -196,10 +196,8 @@ private fun SurfaceCard() {
             .fillMaxWidth()
             .alpha(0.4f)
             .height(128.dp)
-            .background(
-                color = HrTheme.colorScheme.indicatorTrack,
-                shape = RoundedCornerShape(12.dp)
-            )
+            .clip(RoundedCornerShape(12.dp))
+            .background(HrTheme.colorScheme.indicatorTrack)
             .drawWithContent {
                 val stroke = Stroke(
                     width = 2.dp.toPx(),
@@ -242,9 +240,9 @@ private fun SurfaceCard() {
 
 @Preview(showBackground = true)
 @Composable
-private fun FirstStepPagePreview() {
+private fun CreateVacancyFirstStepPreview() {
     HrTheme {
-        FirstStepPage(
+        CreateVacancyFirstStep(
             state = CreateVacancyState(),
             onEvent = {}
         )
