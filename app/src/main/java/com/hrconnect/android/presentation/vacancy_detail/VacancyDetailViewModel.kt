@@ -13,6 +13,6 @@ class VacancyDetailViewModel(
     private val vacancyId = savedStateHandle.toRoute<Route.VacancyDetail>().id
 
     init {
-        logcat { vacancyId }
+        logcat { "vacancyId: $vacancyId" }
     }
 }

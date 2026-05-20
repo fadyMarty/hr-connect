@@ -38,6 +38,7 @@ import com.hrconnect.uikit.presentation.components.bottom_bar.BottomBarItem
 
 @Composable
 fun HomeGraph(
+    onCreateVacancyClick: () -> Unit,
     onAssistantClick: () -> Unit,
 ) {
     val navController = rememberNavController()
@@ -101,6 +102,7 @@ fun HomeGraph(
                 ) {
                     composable<Route.VacancyList> {
                         VacancyListRoot(
+                            onCreateVacancyClick = onCreateVacancyClick,
                             onVacancyClick = { vacancy ->
                                 navController.navigate(
                                     Route.VacancyDetail(vacancy.id)

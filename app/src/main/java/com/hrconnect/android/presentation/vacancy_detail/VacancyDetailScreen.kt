@@ -44,9 +44,11 @@ import com.hrconnect.android.presentation.vacancy_detail.components.BentoGridInf
 import com.hrconnect.android.presentation.vacancy_detail.components.VacancyDetailTopBar
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun VacancyDetailRoot(
+    viewModel: VacancyDetailViewModel = koinViewModel(),
     onBackClick: () -> Unit,
 ) {
     VacancyDetailScreen(
@@ -449,42 +451,6 @@ private fun DescriptionSection() {
 }
 
 @Composable
-fun ContactIconButton(
-    icon: ImageVector,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .size(40.dp)
-            .dropShadow(
-                shape = CircleShape,
-                shadow = Shadow(
-                    offset = DpOffset(0.dp, 1.dp),
-                    radius = 2.dp,
-                    alpha = 0.05f
-                )
-            )
-            .clip(CircleShape)
-            .background(HrTheme.colorScheme.container)
-            .border(
-                width = 1.dp,
-                color = HrTheme.colorScheme.checkboxContainerDisabled,
-                shape = CircleShape
-            )
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            modifier = Modifier.size(16.67.dp),
-            imageVector = icon,
-            contentDescription = null,
-            tint = HrTheme.colorScheme.primary
-        )
-    }
-}
-
-@Composable
 private fun HrContactsSection() {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -560,6 +526,42 @@ private fun HrContactsSection() {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun ContactIconButton(
+    icon: ImageVector,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .size(40.dp)
+            .dropShadow(
+                shape = CircleShape,
+                shadow = Shadow(
+                    offset = DpOffset(0.dp, 1.dp),
+                    radius = 2.dp,
+                    alpha = 0.05f
+                )
+            )
+            .clip(CircleShape)
+            .background(HrTheme.colorScheme.container)
+            .border(
+                width = 1.dp,
+                color = HrTheme.colorScheme.checkboxContainerDisabled,
+                shape = CircleShape
+            )
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            modifier = Modifier.size(16.67.dp),
+            imageVector = icon,
+            contentDescription = null,
+            tint = HrTheme.colorScheme.primary
+        )
     }
 }
 

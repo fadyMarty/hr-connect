@@ -5,7 +5,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.hrconnect.android.common.util.Constants
 import com.hrconnect.android.data.manager.TokenManagerImpl
 import com.hrconnect.android.data.remote.AuthInterceptor
-import com.hrconnect.android.data.repository.AssistantRepositoryImpl
+import com.hrconnect.android.data.repository.LlamatikAssistantRepository
 import com.hrconnect.android.data.repository.AuthRepositoryImpl
 import com.hrconnect.android.data.repository.DictionaryRepositoryImpl
 import com.hrconnect.android.data.repository.EmployeeRepositoryImpl
@@ -21,10 +21,12 @@ import com.hrconnect.android.domain.repository.HiringRepository
 import com.hrconnect.android.domain.repository.VacancyRepository
 import com.hrconnect.android.domain.validator.RegisterValidator
 import com.hrconnect.android.presentation.assistant.AssistantViewModel
+import com.hrconnect.android.presentation.create_vacancy.CreateVacancyViewModel
 import com.hrconnect.android.presentation.loading.LoadingViewModel
 import com.hrconnect.android.presentation.login.LoginViewModel
 import com.hrconnect.android.presentation.register.RegisterViewModel
 import com.hrconnect.android.presentation.splash.SplashViewModel
+import com.hrconnect.android.presentation.vacancy_detail.VacancyDetailViewModel
 import com.hrconnect.android.presentation.vacancy_list.VacancyListViewModel
 import com.hrconnect.netlib.data.remote.AuthApi
 import com.hrconnect.netlib.data.remote.CandidateApi
@@ -96,12 +98,14 @@ val appModule = module {
     singleOf(::HiringRepositoryImpl).bind<HiringRepository>()
     singleOf(::DictionaryRepositoryImpl).bind<DictionaryRepository>()
     singleOf(::RegisterValidatorImpl).bind<RegisterValidator>()
-    singleOf(::AssistantRepositoryImpl).bind<AssistantRepository>()
+    singleOf(::LlamatikAssistantRepository).bind<AssistantRepository>()
 
     viewModelOf(::SplashViewModel)
     viewModelOf(::RegisterViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::LoadingViewModel)
     viewModelOf(::VacancyListViewModel)
+    viewModelOf(::VacancyDetailViewModel)
+    viewModelOf(::CreateVacancyViewModel)
     viewModelOf(::AssistantViewModel)
 }

@@ -35,5 +35,8 @@ sealed interface Route {
     data class VacancyDetail(val id: String) : Route
 
     @Serializable
+    data object CreateVacancy : Route
+
+    @Serializable
     data object Assistant : Route
 }

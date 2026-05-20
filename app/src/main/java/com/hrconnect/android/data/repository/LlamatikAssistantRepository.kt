@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import java.io.File
 
-class AssistantRepositoryImpl(
+class LlamatikAssistantRepository(
     private val context: Context,
 ) : AssistantRepository {
 

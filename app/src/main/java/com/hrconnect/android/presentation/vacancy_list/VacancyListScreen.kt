@@ -51,6 +51,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun VacancyListRoot(
     viewModel: VacancyListViewModel = koinViewModel(),
+    onCreateVacancyClick: () -> Unit,
     onVacancyClick: (Vacancy) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -59,6 +60,9 @@ fun VacancyListRoot(
         state = state,
         onEvent = { event ->
             when (event) {
+                VacancyListEvent.OnCreateVacancyClick -> {
+                    onCreateVacancyClick()
+                }
                 is VacancyListEvent.OnVacancyClick -> {
                     onVacancyClick(event.vacancy)
                 }
@@ -109,7 +113,9 @@ fun VacancyListScreen(
                 ) {
                     Icon(
                         modifier = Modifier.size(20.1.dp, 20.dp),
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
+                        imageVector = ImageVector.vectorResource(
+                            R.drawable.ic_settings
+                        ),
                         contentDescription = null,
                         tint = Color(0xFF64748B)
                     )
@@ -133,14 +139,20 @@ fun VacancyListScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     SecondaryButton(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(58.dp),
                         label = "Configure Tables",
                         onClick = {}
                     )
                     PrimaryButton(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(58.dp),
                         label = "+ Create Vacancy",
-                        onClick = {}
+                        onClick = {
+                            onEvent(VacancyListEvent.OnCreateVacancyClick)
+                        }
                     )
                 }
                 Spacer(modifier = Modifier.height(24.dp))
@@ -208,7 +220,9 @@ fun VacancyListScreen(
                         ) {
                             Icon(
                                 modifier = Modifier.size(13.5.dp),
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_filter_list),
+                                imageVector = ImageVector.vectorResource(
+                                    R.drawable.ic_filter_list
+                                ),
                                 contentDescription = null,
                                 tint = HrTheme.colorScheme.secondary
                             )
@@ -230,7 +244,7 @@ fun VacancyListScreen(
                 ListCard(
                     modifier = Modifier.padding(vertical = 16.dp),
                     title = vacancy.title,
-                    company = vacancy.company,
+                    company = vacancy.department,
                     employment = vacancy.employment,
                     minSalary = vacancy.minSalary / 1000,
                     maxSalary = vacancy.maxSalary / 1000,
@@ -254,7 +268,7 @@ private fun VacancyListScreenPreview() {
                 vacancies = listOf(
                     Vacancy(
                         title = "Senior Product Designer",
-                        company = "Product Team",
+                        department = "Product Team",
                         employment = "Full-time",
                         minSalary = 120000,
                         maxSalary = 160000,
@@ -263,7 +277,7 @@ private fun VacancyListScreenPreview() {
                     ),
                     Vacancy(
                         title = "Middle Backend Developer",
-                        company = "Engineering",
+                        department = "Engineering",
                         employment = "Remote",
                         minSalary = 90000,
                         maxSalary = 130000,
@@ -272,7 +286,7 @@ private fun VacancyListScreenPreview() {
                     ),
                     Vacancy(
                         title = "QA Engineer",
-                        company = "Engineering",
+                        department = "Engineering",
                         employment = "Full-time",
                         minSalary = 70000,
                         maxSalary = 100000,
@@ -281,7 +295,7 @@ private fun VacancyListScreenPreview() {
                     ),
                     Vacancy(
                         title = "Project Manager",
-                        company = "Operations",
+                        department = "Operations",
                         employment = "Hybrid",
                         minSalary = 110000,
                         maxSalary = 140000,

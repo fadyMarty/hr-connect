@@ -8,7 +8,7 @@ data class VacancyListState(
     val vacancies: List<Vacancy> = listOf(
         Vacancy(
             title = "Senior Product Designer",
-            company = "Product Team",
+            department = "Product Team",
             employment = "Full-time",
             minSalary = 120000,
             maxSalary = 160000,
@@ -17,7 +17,7 @@ data class VacancyListState(
         ),
         Vacancy(
             title = "Middle Backend Developer",
-            company = "Engineering",
+            department = "Engineering",
             employment = "Remote",
             minSalary = 90000,
             maxSalary = 130000,
@@ -26,7 +26,7 @@ data class VacancyListState(
         ),
         Vacancy(
             title = "QA Engineer",
-            company = "Engineering",
+            department = "Engineering",
             employment = "Full-time",
             minSalary = 70000,
             maxSalary = 100000,
@@ -35,7 +35,7 @@ data class VacancyListState(
         ),
         Vacancy(
             title = "Project Manager",
-            company = "Operations",
+            department = "Operations",
             employment = "Hybrid",
             minSalary = 110000,
             maxSalary = 140000,

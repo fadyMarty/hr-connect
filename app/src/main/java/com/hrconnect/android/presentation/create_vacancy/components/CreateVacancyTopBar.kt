@@ -1,4 +1,4 @@
-package com.hrconnect.android.presentation.vacancy_detail.components
+package com.hrconnect.android.presentation.create_vacancy.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
@@ -32,8 +31,8 @@ import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
 
 @Composable
-fun VacancyDetailTopBar(
-    onBackClick: () -> Unit,
+fun CreateVacancyTopBar(
+    onCloseClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -52,41 +51,47 @@ fun VacancyDetailTopBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(64.dp)
-                .padding(horizontal = 20.dp),
+                .padding(
+                    start = 20.01.dp,
+                    end = 20.dp
+                )
+                .padding(vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 modifier = Modifier
-                    .size(16.dp)
                     .clickable(
                         interactionSource = null,
                         indication = ripple(bounded = false),
-                        onClick = onBackClick
-                    ),
-                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
+                        onClick = onCloseClick
+                    )
+                    .padding(8.dp)
+                    .size(14.dp),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_close),
                 contentDescription = null,
-                tint = HrTheme.colorScheme.primaryVariant
+                tint = Color(0xFF64748B)
             )
             Text(
-                text = "Vacancy Details",
+                text = "Create Vacancy",
                 style = TextStyle(
                     fontFamily = Manrope,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    lineHeight = 28.sp,
-                    letterSpacing = 0.sp
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                    lineHeight = 24.sp,
+                    letterSpacing = (-0.4).sp,
+                    color = HrTheme.colorScheme.topBarTitle
                 )
             )
             Icon(
                 modifier = Modifier
-                    .size(16.dp)
                     .clickable(
                         interactionSource = null,
                         indication = ripple(bounded = false),
                         onClick = {}
-                    ),
+                    )
+                    .padding(8.dp)
+                    .size(4.dp, 16.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_more_vert),
                 contentDescription = null,
                 tint = Color(0xFF64748B)

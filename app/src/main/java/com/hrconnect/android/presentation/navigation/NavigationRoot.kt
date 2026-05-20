@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.hrconnect.android.presentation.assistant.AssistantRoot
+import com.hrconnect.android.presentation.create_vacancy.CreateVacancyRoot
 import com.hrconnect.android.presentation.home.HomeGraph
 import com.hrconnect.android.presentation.loading.LoadingRoot
 import com.hrconnect.android.presentation.login.LoginRoot
@@ -55,6 +56,9 @@ fun NavigationRoot(
         }
         composable<Route.HomeGraph> {
             HomeGraph(
+                onCreateVacancyClick = {
+                    navController.navigate(Route.CreateVacancy)
+                },
                 onAssistantClick = {
                     navController.navigate(Route.Assistant)
                 }
@@ -62,6 +66,13 @@ fun NavigationRoot(
         }
         composable<Route.Assistant> {
             AssistantRoot(
+                onCloseClick = {
+                    navController.navigateUp()
+                }
+            )
+        }
+        composable<Route.CreateVacancy> {
+            CreateVacancyRoot(
                 onCloseClick = {
                     navController.navigateUp()
                 }
