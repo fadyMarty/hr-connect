@@ -3,13 +3,14 @@ package com.hrconnect.android.presentation.assistant
 import androidx.compose.foundation.text.input.clearText
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hrconnect.android.data.util.AssistantResult
+import com.hrconnect.android.common.util.AssistantResult
 import com.hrconnect.android.domain.model.Message
 import com.hrconnect.android.domain.repository.AssistantRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import logcat.logcat
 
 class AssistantViewModel(
     private val assistantRepository: AssistantRepository,
@@ -20,7 +21,9 @@ class AssistantViewModel(
 
     init {
         viewModelScope.launch {
+            logcat { "Started" }
             assistantRepository.init()
+            logcat { "Ended" }
         }
     }
 

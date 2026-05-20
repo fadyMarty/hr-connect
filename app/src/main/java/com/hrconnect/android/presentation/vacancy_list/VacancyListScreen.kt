@@ -51,17 +51,26 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun VacancyListRoot(
     viewModel: VacancyListViewModel = koinViewModel(),
+    onVacancyClick: (Vacancy) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     VacancyListScreen(
-        state = state
+        state = state,
+        onEvent = { event ->
+            when (event) {
+                is VacancyListEvent.OnVacancyClick -> {
+                    onVacancyClick(event.vacancy)
+                }
+            }
+        }
     )
 }
 
 @Composable
 fun VacancyListScreen(
     state: VacancyListState,
+    onEvent: (VacancyListEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -227,14 +236,16 @@ fun VacancyListScreen(
                     maxSalary = vacancy.maxSalary / 1000,
                     applicantsCount = vacancy.applicantsCount,
                     isActive = true,
-                    onClick = {}
+                    onClick = {
+                        onEvent(VacancyListEvent.OnVacancyClick(vacancy))
+                    }
                 )
             }
         }
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun VacancyListScreenPreview() {
     HrTheme {
@@ -278,7 +289,8 @@ private fun VacancyListScreenPreview() {
                         isActive = true
                     )
                 )
-            )
+            ),
+            onEvent = {}
         )
     }
 }

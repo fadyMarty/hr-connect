@@ -11,7 +11,7 @@ import com.hrconnect.android.R
 import com.hrconnect.android.common.util.TestTags
 import com.hrconnect.android.data.validator.RegisterValidatorImpl
 import com.hrconnect.android.domain.validator.RegisterValidator
-import com.hrconnect.netlib.auth.domain.repository.AuthRepository
+import com.hrconnect.android.domain.repository.AuthRepository
 import com.hrconnect.uikit.common.theme.HrTheme
 import io.mockk.mockk
 import org.junit.Before

@@ -27,8 +27,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.hrconnect.android.R
 import com.hrconnect.android.presentation.navigation.Route
+import com.hrconnect.android.presentation.vacancy_detail.VacancyDetailRoot
 import com.hrconnect.android.presentation.vacancy_list.VacancyListRoot
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.presentation.components.bottom_bar.BottomBar
@@ -60,10 +62,10 @@ fun HomeGraph(
                         route = Route.CandidateList
                     ),
                     BottomBarItem(
-                        selected = currentDestination.isSelected(Route.VacancyList),
+                        selected = currentDestination.isSelected(Route.VacancyGraph),
                         icon = ImageVector.vectorResource(R.drawable.ic_work),
                         label = "Vacancies",
-                        route = Route.VacancyList
+                        route = Route.VacancyGraph
                     )
                 ),
                 onItemClick = { item ->
@@ -94,8 +96,25 @@ fun HomeGraph(
                 composable<Route.CandidateList> {
 
                 }
-                composable<Route.VacancyList> {
-                    VacancyListRoot()
+                navigation<Route.VacancyGraph>(
+                    startDestination = Route.VacancyList
+                ) {
+                    composable<Route.VacancyList> {
+                        VacancyListRoot(
+                            onVacancyClick = { vacancy ->
+                                navController.navigate(
+                                    Route.VacancyDetail(vacancy.id)
+                                )
+                            }
+                        )
+                    }
+                    composable<Route.VacancyDetail> {
+                        VacancyDetailRoot(
+                            onBackClick = {
+                                navController.navigateUp()
+                            }
+                        )
+                    }
                 }
             }
             Box(

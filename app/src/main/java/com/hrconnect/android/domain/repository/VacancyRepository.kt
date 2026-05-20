@@ -1,7 +1,13 @@
 package com.hrconnect.android.domain.repository
 
-import com.hrconnect.android.domain.model.Vacancy
+import java.io.File
 
 interface VacancyRepository {
-    suspend fun getVacancies(): Result<List<Vacancy>>
+    suspend fun getVacancies(): Result<Unit>
+    suspend fun createVacancy(): Result<Unit>
+    suspend fun getVacancyById(id: String): Result<Unit>
+    suspend fun updateVacancy(id: String): Result<Unit>
+    suspend fun deleteVacancy(id: String): Result<Unit>
+    suspend fun uploadVacancyFiles(id: String, files: List<File>): Result<Unit>
+    suspend fun getVacanciesShort(): Result<Unit>
 }

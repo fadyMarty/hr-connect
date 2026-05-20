@@ -1,6 +1,6 @@
 package com.hrconnect.android.domain.repository
 
-import com.hrconnect.android.data.util.AssistantResult
+import com.hrconnect.android.common.util.AssistantResult
 import kotlinx.coroutines.flow.Flow
 
 interface AssistantRepository {

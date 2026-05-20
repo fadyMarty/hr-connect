@@ -26,7 +26,13 @@ sealed interface Route {
     data object CandidateList : Route
 
     @Serializable
+    data object VacancyGraph : Route
+
+    @Serializable
     data object VacancyList : Route
+
+    @Serializable
+    data class VacancyDetail(val id: String) : Route
 
     @Serializable
     data object Assistant : Route

@@ -2,7 +2,7 @@ package com.hrconnect.android.presentation.register
 
 import com.google.common.truth.Truth.assertThat
 import com.hrconnect.android.domain.validator.RegisterValidator
-import com.hrconnect.netlib.auth.domain.repository.AuthRepository
+import com.hrconnect.android.domain.repository.AuthRepository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

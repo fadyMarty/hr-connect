@@ -1,6 +1,9 @@
 package com.hrconnect.android.domain.model
 
+import java.util.UUID
+
 data class Vacancy(
+    val id: String = UUID.randomUUID().toString(),
     val title: String,
     val company: String,
     val employment: String,

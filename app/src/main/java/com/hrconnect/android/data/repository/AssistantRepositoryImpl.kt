@@ -1,8 +1,8 @@
 package com.hrconnect.android.data.repository
 
 import android.content.Context
+import com.hrconnect.android.common.util.AssistantResult
 import com.hrconnect.android.common.util.Constants
-import com.hrconnect.android.data.util.AssistantResult
 import com.hrconnect.android.domain.repository.AssistantRepository
 import com.llamatik.library.platform.LlamaBridge
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import java.io.File
-
 
 class AssistantRepositoryImpl(
     private val context: Context,

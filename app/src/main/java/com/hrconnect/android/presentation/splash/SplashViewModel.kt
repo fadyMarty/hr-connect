@@ -2,7 +2,7 @@ package com.hrconnect.android.presentation.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hrconnect.netlib.auth.domain.manager.TokenManager
+import com.hrconnect.android.domain.manager.TokenManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn

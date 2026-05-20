@@ -1,4 +1,4 @@
-package com.hrconnect.android.data.util
+package com.hrconnect.android.common.util
 
 sealed interface AssistantResult {
     data class Delta(val text: String) : AssistantResult
