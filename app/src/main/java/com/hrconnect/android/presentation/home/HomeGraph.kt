@@ -29,6 +29,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.hrconnect.android.R
+import com.hrconnect.android.presentation.candidate_detail.CandidateDetailRoot
 import com.hrconnect.android.presentation.navigation.Route
 import com.hrconnect.android.presentation.vacancy_detail.VacancyDetailRoot
 import com.hrconnect.android.presentation.vacancy_list.VacancyListRoot
@@ -57,10 +58,10 @@ fun HomeGraph(
                         route = Route.HrBoard
                     ),
                     BottomBarItem(
-                        selected = currentDestination.isSelected(Route.CandidateList),
+                        selected = currentDestination.isSelected(Route.CandidateGraph),
                         icon = ImageVector.vectorResource(R.drawable.ic_groups),
                         label = "Candidates",
-                        route = Route.CandidateList
+                        route = Route.CandidateGraph
                     ),
                     BottomBarItem(
                         selected = currentDestination.isSelected(Route.VacancyGraph),
@@ -94,8 +95,15 @@ fun HomeGraph(
                 composable<Route.HrBoard> {
 
                 }
-                composable<Route.CandidateList> {
+                navigation<Route.CandidateGraph>(
+                    startDestination = Route.CandidateDetail
+                ) {
+                    composable<Route.CandidateList> {
 
+                    }
+                    composable<Route.CandidateDetail> {
+                        CandidateDetailRoot()
+                    }
                 }
                 navigation<Route.VacancyGraph>(
                     startDestination = Route.VacancyList

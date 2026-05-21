@@ -1,6 +1,6 @@
 package com.hrconnect.android.domain.repository
 
-import java.io.File
+import io.github.vinceglb.filekit.PlatformFile
 
 interface VacancyRepository {
     suspend fun getVacancies(): Result<Unit>
@@ -8,6 +8,6 @@ interface VacancyRepository {
     suspend fun getVacancyById(id: String): Result<Unit>
     suspend fun updateVacancy(id: String): Result<Unit>
     suspend fun deleteVacancy(id: String): Result<Unit>
-    suspend fun uploadVacancyFiles(id: String, files: List<File>): Result<Unit>
+    suspend fun uploadVacancyFiles(id: String, files: List<PlatformFile>): Result<Unit>
     suspend fun getVacanciesShort(): Result<Unit>
 }

@@ -5,11 +5,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.hrconnect.android.common.util.Constants
 import com.hrconnect.android.data.manager.TokenManagerImpl
 import com.hrconnect.android.data.remote.AuthInterceptor
-import com.hrconnect.android.data.repository.LlamatikAssistantRepository
 import com.hrconnect.android.data.repository.AuthRepositoryImpl
 import com.hrconnect.android.data.repository.DictionaryRepositoryImpl
 import com.hrconnect.android.data.repository.EmployeeRepositoryImpl
 import com.hrconnect.android.data.repository.HiringRepositoryImpl
+import com.hrconnect.android.data.repository.LlamatikAssistantRepository
+import com.hrconnect.android.data.repository.PhotoRepositoryImpl
 import com.hrconnect.android.data.repository.VacancyRepositoryImpl
 import com.hrconnect.android.data.validator.RegisterValidatorImpl
 import com.hrconnect.android.domain.manager.TokenManager
@@ -18,9 +19,11 @@ import com.hrconnect.android.domain.repository.AuthRepository
 import com.hrconnect.android.domain.repository.DictionaryRepository
 import com.hrconnect.android.domain.repository.EmployeeRepository
 import com.hrconnect.android.domain.repository.HiringRepository
+import com.hrconnect.android.domain.repository.PhotoRepository
 import com.hrconnect.android.domain.repository.VacancyRepository
 import com.hrconnect.android.domain.validator.RegisterValidator
 import com.hrconnect.android.presentation.assistant.AssistantViewModel
+import com.hrconnect.android.presentation.candidate_detail.CandidateDetailViewModel
 import com.hrconnect.android.presentation.create_vacancy.CreateVacancyViewModel
 import com.hrconnect.android.presentation.loading.LoadingViewModel
 import com.hrconnect.android.presentation.login.LoginViewModel
@@ -99,6 +102,7 @@ val appModule = module {
     singleOf(::DictionaryRepositoryImpl).bind<DictionaryRepository>()
     singleOf(::RegisterValidatorImpl).bind<RegisterValidator>()
     singleOf(::LlamatikAssistantRepository).bind<AssistantRepository>()
+    singleOf(::PhotoRepositoryImpl).bind<PhotoRepository>()
 
     viewModelOf(::SplashViewModel)
     viewModelOf(::RegisterViewModel)
@@ -108,4 +112,5 @@ val appModule = module {
     viewModelOf(::VacancyDetailViewModel)
     viewModelOf(::CreateVacancyViewModel)
     viewModelOf(::AssistantViewModel)
+    viewModelOf(::CandidateDetailViewModel)
 }

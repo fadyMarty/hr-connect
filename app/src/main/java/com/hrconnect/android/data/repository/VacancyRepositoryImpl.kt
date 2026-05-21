@@ -3,9 +3,11 @@ package com.hrconnect.android.data.repository
 import com.hrconnect.android.domain.repository.VacancyRepository
 import com.hrconnect.netlib.common.util.safeCall
 import com.hrconnect.netlib.data.remote.VacancyApi
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.name
+import io.github.vinceglb.filekit.readBytes
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class VacancyRepositoryImpl(
     private val vacancyApi: VacancyApi,
@@ -58,7 +60,7 @@ class VacancyRepositoryImpl(
 
     override suspend fun uploadVacancyFiles(
         id: String,
-        files: List<File>,
+        files: List<PlatformFile>,
     ): Result<Unit> {
         return safeCall(
             tag = TAG,
@@ -68,9 +70,9 @@ class VacancyRepositoryImpl(
                 id = id,
                 files = files.map { file ->
                     MultipartBody.Part.createFormData(
-                        name = file.nameWithoutExtension,
+                        name = "files",
                         filename = file.name,
-                        body = file.asRequestBody()
+                        body = file.readBytes().toRequestBody()
                     )
                 }
             )

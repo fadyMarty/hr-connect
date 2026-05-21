@@ -23,7 +23,13 @@ sealed interface Route {
     data object HrBoard : Route
 
     @Serializable
+    data object CandidateGraph : Route
+
+    @Serializable
     data object CandidateList : Route
+
+    @Serializable
+    data object CandidateDetail : Route
 
     @Serializable
     data object VacancyGraph : Route

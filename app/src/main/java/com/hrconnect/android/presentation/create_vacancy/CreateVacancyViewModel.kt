@@ -33,6 +33,24 @@ class CreateVacancyViewModel : ViewModel() {
                     )
                 }
             }
+            is CreateVacancyEvent.OnDeleteFileClick -> {
+                _state.update {
+                    it.copy(
+                        supportDocuments = it.supportDocuments
+                            .toMutableList()
+                            .apply {
+                                remove(event.file)
+                            }
+                    )
+                }
+            }
+            is CreateVacancyEvent.OnFilesSelected -> {
+                _state.update {
+                    it.copy(
+                        supportDocuments = it.supportDocuments + event.files
+                    )
+                }
+            }
             else -> Unit
         }
     }

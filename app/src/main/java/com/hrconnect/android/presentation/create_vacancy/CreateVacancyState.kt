@@ -1,7 +1,7 @@
 package com.hrconnect.android.presentation.create_vacancy
 
 import androidx.compose.foundation.text.input.TextFieldState
-import java.io.File
+import io.github.vinceglb.filekit.PlatformFile
 
 data class CreateVacancyState(
     val vacancyTitleState: TextFieldState = TextFieldState(),
@@ -18,7 +18,7 @@ data class CreateVacancyState(
     val requirementsState: TextFieldState = TextFieldState(),
     val technicalQuestionsState: TextFieldState = TextFieldState(),
     val testTaskState: TextFieldState = TextFieldState(),
-    val supportDocuments: List<File> = emptyList(),
+    val supportDocuments: List<PlatformFile> = emptyList(),
     val hrManager: String? = null,
     val phoneState: TextFieldState = TextFieldState(),
     val emailState: TextFieldState = TextFieldState(),

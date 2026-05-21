@@ -585,7 +585,7 @@ fun AttachmentsSection(
             )
             AttachmentItem(
                 fileName = "Benefits_Package.pdf",
-                icon = ImageVector.vectorResource(R.drawable.ic_document),
+                icon = ImageVector.vectorResource(R.drawable.ic_file),
                 iconTint = Color(0xFF3B82F6),
                 onDownloadClick = {}
             )

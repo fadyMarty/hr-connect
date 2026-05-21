@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hrconnect.android.presentation.create_vacancy.components.CreateVacancyBottomBar
 import com.hrconnect.android.presentation.create_vacancy.components.CreateVacancyFirstStep
+import com.hrconnect.android.presentation.create_vacancy.components.CreateVacancySecondStep
 import com.hrconnect.android.presentation.create_vacancy.components.CreateVacancyTopBar
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.presentation.components.progress_bar.ProgressBar
@@ -90,7 +91,11 @@ fun CreateVacancyScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "General Information",
+                        text = when (pagerState.currentPage) {
+                            0 -> "General Information"
+                            1 -> "Step 2: Details & Requirements"
+                            else -> "Contact Details"
+                        },
                         style = HrTheme.typography.fieldLabel,
                         color = HrTheme.colorScheme.primary
                     )
@@ -114,6 +119,10 @@ fun CreateVacancyScreen(
             ) { index ->
                 when (index) {
                     0 -> CreateVacancyFirstStep(
+                        state = state,
+                        onEvent = onEvent
+                    )
+                    1 -> CreateVacancySecondStep(
                         state = state,
                         onEvent = onEvent
                     )

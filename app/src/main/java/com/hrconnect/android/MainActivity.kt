@@ -12,6 +12,8 @@ import com.hrconnect.android.presentation.navigation.NavigationRoot
 import com.hrconnect.android.presentation.navigation.Route
 import com.hrconnect.android.presentation.splash.SplashViewModel
 import com.hrconnect.uikit.common.theme.HrTheme
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.dialogs.init
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -23,6 +25,7 @@ class MainActivity : ComponentActivity() {
             viewModel.state.value.isLoading
         }
         enableEdgeToEdge()
+        FileKit.init(this)
         setContent {
             HrTheme {
                 val state by viewModel.state.collectAsStateWithLifecycle()

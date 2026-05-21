@@ -18,14 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.dropShadow
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -37,6 +30,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hrconnect.android.R
+import com.hrconnect.android.common.util.dashedBorder
 import com.hrconnect.android.presentation.components.HrSwitch
 import com.hrconnect.android.presentation.create_vacancy.CreateVacancyEvent
 import com.hrconnect.android.presentation.create_vacancy.CreateVacancyState
@@ -198,29 +192,14 @@ private fun SurfaceCard() {
             .height(128.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(HrTheme.colorScheme.indicatorTrack)
-            .drawWithContent {
-                val stroke = Stroke(
-                    width = 2.dp.toPx(),
-                    pathEffect = PathEffect.dashPathEffect(
-                        intervals = floatArrayOf(6.dp.toPx(), 4.dp.toPx()),
-                        phase = 0f
-                    )
-                )
-                drawContent()
-                drawRoundRect(
-                    color = Color(0xFFC3C6D7),
-                    style = stroke,
-                    cornerRadius = CornerRadius(12.dp.toPx()),
-                    size = Size(
-                        width = size.width - stroke.width,
-                        height = size.height - stroke.width
-                    ),
-                    topLeft = Offset(
-                        x = stroke.width / 2,
-                        y = stroke.width / 2
-                    )
-                )
-            },
+            .padding(1.dp)
+            .dashedBorder(
+                color = HrTheme.colorScheme.border,
+                shape = RoundedCornerShape(12.dp),
+                strokeWidth = 2.dp,
+                dashLength = 6.dp,
+                gapLength = 4.dp
+            ),
         contentAlignment = Alignment.Center
     ) {
         Text(
