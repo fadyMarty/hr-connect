@@ -171,6 +171,7 @@ fun AssistantScreen(
                     end = 20.dp,
                     bottom = 19.dp
                 ),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
                 reverseLayout = true
             ) {
                 if (state.messages.isEmpty()) {

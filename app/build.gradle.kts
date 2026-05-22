@@ -94,6 +94,8 @@ dependencies {
     testImplementation(libs.truth)
     androidTestImplementation(libs.mockk.android)
 
+    implementation("com.google.ai.edge.litertlm:litertlm-android:0.12.0")
+
 
     implementation(project(":uikit"))
     implementation(project(":netlib"))

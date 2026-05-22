@@ -9,7 +9,7 @@ import com.hrconnect.android.data.repository.AuthRepositoryImpl
 import com.hrconnect.android.data.repository.DictionaryRepositoryImpl
 import com.hrconnect.android.data.repository.EmployeeRepositoryImpl
 import com.hrconnect.android.data.repository.HiringRepositoryImpl
-import com.hrconnect.android.data.repository.LlamatikAssistantRepository
+import com.hrconnect.android.data.repository.LiteRtAssistantRepository
 import com.hrconnect.android.data.repository.PhotoRepositoryImpl
 import com.hrconnect.android.data.repository.VacancyRepositoryImpl
 import com.hrconnect.android.data.validator.RegisterValidatorImpl
@@ -102,7 +102,7 @@ val appModule = module {
     singleOf(::HiringRepositoryImpl).bind<HiringRepository>()
     singleOf(::DictionaryRepositoryImpl).bind<DictionaryRepository>()
     singleOf(::RegisterValidatorImpl).bind<RegisterValidator>()
-    singleOf(::LlamatikAssistantRepository).bind<AssistantRepository>()
+    singleOf(::LiteRtAssistantRepository).bind<AssistantRepository>()
     singleOf(::PhotoRepositoryImpl).bind<PhotoRepository>()
 
     viewModelOf(::SplashViewModel)

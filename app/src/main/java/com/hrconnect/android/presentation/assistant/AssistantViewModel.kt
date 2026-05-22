@@ -3,14 +3,12 @@ package com.hrconnect.android.presentation.assistant
 import androidx.compose.foundation.text.input.clearText
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hrconnect.android.common.util.AssistantResult
 import com.hrconnect.android.domain.model.Message
 import com.hrconnect.android.domain.repository.AssistantRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import logcat.logcat
 
 class AssistantViewModel(
     private val assistantRepository: AssistantRepository,
@@ -21,9 +19,7 @@ class AssistantViewModel(
 
     init {
         viewModelScope.launch {
-            logcat { "Started" }
-            assistantRepository.init()
-            logcat { "Ended" }
+            assistantRepository.initialize()
         }
     }
 
@@ -54,33 +50,19 @@ class AssistantViewModel(
                 )
             }
             state.value.messageState.clearText()
-            assistantRepository.generateStream(
-                prompt = state.value.messageState.text.toString()
-            ).collect { result ->
-                when (result) {
-                    is AssistantResult.Delta -> {
-                        val message = state.value.messages.first()
-                        _state.update {
-                            it.copy(
-                                messages = it.messages.toMutableList().apply {
-                                    set(
-                                        index = 0,
-                                        element = message.copy(
-                                            content = message.content + result.text
-                                        )
-                                    )
-                                }
+            assistantRepository.sendMessage(userMessage.content).collect { token ->
+                _state.update {
+                    it.copy(
+                        messages = it.messages.toMutableList().apply {
+                            val message = first()
+                            set(
+                                index = 0,
+                                element = message.copy(
+                                    content = message.content + token
+                                )
                             )
                         }
-                    }
-                    is AssistantResult.Error -> {
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                error = result.message
-                            )
-                        }
-                    }
+                    )
                 }
             }
             _state.update {
@@ -89,5 +71,10 @@ class AssistantViewModel(
                 )
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        assistantRepository.close()
     }
 }
