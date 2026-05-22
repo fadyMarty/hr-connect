@@ -53,6 +53,12 @@ import com.attafitamim.krop.ui.CropperPreview
 import com.hrconnect.android.R
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 
 @Composable
 fun HrImageCropperDialog(
@@ -67,6 +73,8 @@ fun HrImageCropperDialog(
         aspects = listOf(AspectRatio(1, 1))
     ),
 ) {
+    val hazeState = rememberHazeState()
+
     LaunchedEffect(Unit) {
         state.setInitialState(style)
     }
@@ -97,7 +105,9 @@ fun HrImageCropperDialog(
                         .clipToBounds()
                 ) {
                     CropperPreview(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .hazeSource(hazeState),
                         state = state
                     )
                     TooltipInstructions(
@@ -114,13 +124,15 @@ fun HrImageCropperDialog(
                             icon = ImageVector.vectorResource(R.drawable.ic_rotate_left),
                             onClick = {
                                 state.rotLeft()
-                            }
+                            },
+                            hazeState = hazeState
                         )
                         ControlIconButton(
                             icon = ImageVector.vectorResource(R.drawable.ic_rotate_right),
                             onClick = {
                                 state.rotRight()
-                            }
+                            },
+                            hazeState = hazeState
                         )
                     }
                 }
@@ -360,12 +372,22 @@ private fun TooltipInstructions(
 private fun ControlIconButton(
     icon: ImageVector,
     onClick: () -> Unit,
+    hazeState: HazeState,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .size(48.dp)
             .clip(CircleShape)
+            .hazeEffect(
+                state = hazeState,
+                style = HazeStyle(
+                    tint = HazeTint(
+                        color = HrTheme.colorScheme.container.copy(0.2f)
+                    ),
+                    blurRadius = 12.dp
+                )
+            )
             .background(
                 HrTheme.colorScheme.container.copy(0.1f)
             )

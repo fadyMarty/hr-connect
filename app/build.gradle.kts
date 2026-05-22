@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.krop.extensions.filekit)
     implementation(libs.llamatik)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.haze)
     implementation(libs.logcat)
     implementation(libs.pdf.viewer)
     implementation(libs.appmetrica.analytics)
@@ -92,6 +93,7 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.truth)
     androidTestImplementation(libs.mockk.android)
+
 
     implementation(project(":uikit"))
     implementation(project(":netlib"))

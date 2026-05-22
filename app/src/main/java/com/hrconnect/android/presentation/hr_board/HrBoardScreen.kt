@@ -57,6 +57,11 @@ import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
 import com.hrconnect.uikit.presentation.components.inputs.Input
 import com.hrconnect.uikit.presentation.components.select.Select
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -77,6 +82,8 @@ fun HrBoardScreen(
     state: HrBoardState,
     onEvent: (HrBoardEvent) -> Unit,
 ) {
+    val hazeState = rememberHazeState()
+
     val statuses = remember {
         listOf(
             "New Applicants",
@@ -253,256 +260,269 @@ fun HrBoardScreen(
                         color = HrTheme.colorScheme.bottomBarBorder
                     )
                 }
-                LazyColumn(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f),
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 16.dp,
-                        end = 20.dp,
-                        bottom = 19.dp
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(32.dp)
+                        .weight(1f)
                 ) {
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Text(
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .hazeSource(hazeState),
+                        contentPadding = PaddingValues(
+                            start = 20.dp,
+                            top = 16.dp,
+                            end = 20.dp,
+                            bottom = 128.dp
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(32.dp)
+                    ) {
+                        item {
+                            Column(
                                 modifier = Modifier.fillMaxWidth(),
-                                text = "Active Filters",
-                                style = HrTheme.typography.subheader,
-                                color = HrTheme.colorScheme.fieldLabel
-                            )
-                            FlowRow(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(14.67.dp),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                if (state.department != null) {
-                                    ActiveFilterChip(
-                                        label = state.department,
-                                        onClick = {
-                                            onEvent(HrBoardEvent.OnDepartmentSelected(null))
-                                        }
-                                    )
-                                }
-                                state.statuses.forEach { status ->
-                                    ActiveFilterChip(
-                                        label = status,
-                                        onClick = {
-                                            onEvent(HrBoardEvent.OnStatusSelected(status))
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    item {
-                        Input(
-                            state = state.vacancyState,
-                            label = "Vacancy",
-                            placeholder = "Search by job title...",
-                            leadingIcon = ImageVector.vectorResource(R.drawable.ic_search)
-                        )
-                    }
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.5.dp)
-                        ) {
-                            Text(
-                                text = "Candidate Status",
-                                style = HrTheme.typography.fieldLabel,
-                                color = HrTheme.colorScheme.fieldLabel
-                            )
-                            Grid(
-                                config = {
-                                    repeat(2) {
-                                        column(1.fr)
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = "Active Filters",
+                                    style = HrTheme.typography.subheader,
+                                    color = HrTheme.colorScheme.fieldLabel
+                                )
+                                FlowRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(14.67.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    if (state.department != null) {
+                                        ActiveFilterChip(
+                                            label = state.department,
+                                            onClick = {
+                                                onEvent(HrBoardEvent.OnDepartmentSelected(null))
+                                            }
+                                        )
                                     }
-                                    gap(8.dp)
-                                }
-                            ) {
-                                statuses.forEach { status ->
-                                    HrFilterChip(
-                                        label = status,
-                                        selected = state.statuses.contains(status),
-                                        onClick = {
-                                            onEvent(HrBoardEvent.OnStatusSelected(status))
-                                        }
-                                    )
+                                    state.statuses.forEach { status ->
+                                        ActiveFilterChip(
+                                            label = status,
+                                            onClick = {
+                                                onEvent(HrBoardEvent.OnStatusSelected(status))
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         }
-                    }
-                    item {
-                        Select(
-                            items = departments,
-                            onItemClick = { department ->
-                                onEvent(HrBoardEvent.OnDepartmentSelected(department))
-                            },
-                            selectedItem = state.department,
-                            label = "Department"
-                        )
-                    }
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
+                        item {
                             Input(
-                                state = state.cityState,
-                                placeholder = "London, New York, Remote...",
-                                leadingIcon = ImageVector.vectorResource(R.drawable.ic_location_on_outline)
+                                state = state.vacancyState,
+                                label = "Vacancy",
+                                placeholder = "Search by job title...",
+                                leadingIcon = ImageVector.vectorResource(R.drawable.ic_search)
                             )
-                            FlowRow(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                CityItem(
-                                    label = "POPULAR: SAN FRANCISCO"
-                                )
-                                CityItem(
-                                    label = "BERLIN"
-                                )
-                            }
                         }
-                    }
-                    item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Row(
+                        item {
+                            Column(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                verticalArrangement = Arrangement.spacedBy(8.5.dp)
                             ) {
                                 Text(
-                                    text = "Salary Range (Yearly)",
+                                    text = "Candidate Status",
                                     style = HrTheme.typography.fieldLabel,
                                     color = HrTheme.colorScheme.fieldLabel
                                 )
-                                Text(
-                                    text = "$${formatSalary(state.salaryRange.start.toInt())} — " +
-                                            "$${formatSalary(state.salaryRange.endInclusive.toInt())}",
-                                    style = TextStyle(
-                                        fontFamily = Manrope,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 14.sp,
-                                        lineHeight = 20.sp,
-                                        letterSpacing = 0.sp
-                                    ),
-                                    color = HrTheme.colorScheme.primary
-                                )
+                                Grid(
+                                    config = {
+                                        repeat(2) {
+                                            column(1.fr)
+                                        }
+                                        gap(8.dp)
+                                    }
+                                ) {
+                                    statuses.forEach { status ->
+                                        HrFilterChip(
+                                            label = status,
+                                            selected = state.statuses.contains(status),
+                                            onClick = {
+                                                onEvent(HrBoardEvent.OnStatusSelected(status))
+                                            }
+                                        )
+                                    }
+                                }
                             }
-                            RangeSlider(
+                        }
+                        item {
+                            Select(
+                                items = departments,
+                                onItemClick = { department ->
+                                    onEvent(HrBoardEvent.OnDepartmentSelected(department))
+                                },
+                                selectedItem = state.department,
+                                label = "Department"
+                            )
+                        }
+                        item {
+                            Column(
                                 modifier = Modifier.fillMaxWidth(),
-                                value = state.salaryRange,
-                                onValueChange = {
-                                    onEvent(HrBoardEvent.OnSalaryRangeChanged(it))
-                                },
-                                valueRange = 0f..200000f,
-                                startThumb = {
-                                    SliderThumb()
-                                },
-                                endThumb = {
-                                    SliderThumb()
-                                },
-                                track = { rangeSliderState ->
-                                    SliderDefaults.Track(
-                                        modifier = Modifier.height(6.dp),
-                                        rangeSliderState = rangeSliderState,
-                                        colors = SliderDefaults.colors(
-                                            inactiveTrackColor = HrTheme.colorScheme.indicatorTrack
-                                        ),
-                                        drawStopIndicator = null,
-                                        thumbTrackGapSize = (-10).dp,
-                                        trackInsideCornerSize = 3.dp
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                Input(
+                                    state = state.cityState,
+                                    placeholder = "London, New York, Remote...",
+                                    leadingIcon = ImageVector.vectorResource(R.drawable.ic_location_on_outline)
+                                )
+                                FlowRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    CityItem(
+                                        label = "POPULAR: SAN FRANCISCO"
+                                    )
+                                    CityItem(
+                                        label = "BERLIN"
                                     )
                                 }
-                            )
+                            }
+                        }
+                        item {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(
+                                        text = "Salary Range (Yearly)",
+                                        style = HrTheme.typography.fieldLabel,
+                                        color = HrTheme.colorScheme.fieldLabel
+                                    )
+                                    Text(
+                                        text = "$${formatSalary(state.salaryRange.start.toInt())} — " +
+                                                "$${formatSalary(state.salaryRange.endInclusive.toInt())}",
+                                        style = TextStyle(
+                                            fontFamily = Manrope,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 14.sp,
+                                            lineHeight = 20.sp,
+                                            letterSpacing = 0.sp
+                                        ),
+                                        color = HrTheme.colorScheme.primary
+                                    )
+                                }
+                                RangeSlider(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    value = state.salaryRange,
+                                    onValueChange = {
+                                        onEvent(HrBoardEvent.OnSalaryRangeChanged(it))
+                                    },
+                                    valueRange = 0f..200000f,
+                                    startThumb = {
+                                        SliderThumb()
+                                    },
+                                    endThumb = {
+                                        SliderThumb()
+                                    },
+                                    track = { rangeSliderState ->
+                                        SliderDefaults.Track(
+                                            modifier = Modifier.height(6.dp),
+                                            rangeSliderState = rangeSliderState,
+                                            colors = SliderDefaults.colors(
+                                                inactiveTrackColor = HrTheme.colorScheme.indicatorTrack
+                                            ),
+                                            drawStopIndicator = null,
+                                            thumbTrackGapSize = (-10).dp,
+                                            trackInsideCornerSize = 3.dp
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            HrTheme.colorScheme.container.copy(alpha = 0.9f)
-                        )
-                ) {
-                    HorizontalDivider(
-                        color = HrTheme.colorScheme.bottomBarBorder
-                    )
-                    Row(
+                    Column(
                         modifier = Modifier
+                            .align(Alignment.BottomCenter)
                             .fillMaxWidth()
-                            .padding(
-                                start = 20.dp,
-                                top = 20.dp,
-                                end = 20.dp,
-                                bottom = 32.dp
-                            ),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            .hazeEffect(
+                                state = hazeState,
+                                style = HazeStyle(
+                                    tint = HazeTint(
+                                        color = HrTheme.colorScheme.container.copy(alpha = 0.3f)
+                                    ),
+                                    blurRadius = 12.dp
+                                )
+                            )
                     ) {
-                        Box(
+                        HorizontalDivider(
+                            color = HrTheme.colorScheme.bottomBarBorder
+                        )
+                        Row(
                             modifier = Modifier
-                                .weight(1f)
-                                .height(56.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .border(
-                                    width = 1.dp,
-                                    color = HrTheme.colorScheme.primary,
-                                    shape = RoundedCornerShape(12.dp)
-                                )
-                                .clickable {
-                                    onEvent(HrBoardEvent.OnResetClick)
-                                },
-                            contentAlignment = Alignment.Center
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 20.dp,
+                                    top = 20.dp,
+                                    end = 20.dp,
+                                    bottom = 32.dp
+                                ),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            Text(
-                                text = "Reset all",
-                                style = TextStyle(
-                                    fontFamily = Manrope,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 16.sp,
-                                    lineHeight = 20.sp,
-                                    letterSpacing = 0.sp,
-                                    textAlign = TextAlign.Center,
-                                    color = HrTheme.colorScheme.primary
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(56.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .border(
+                                        width = 1.dp,
+                                        color = HrTheme.colorScheme.primary,
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                    .clickable {
+                                        onEvent(HrBoardEvent.OnResetClick)
+                                    },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "Reset all",
+                                    style = TextStyle(
+                                        fontFamily = Manrope,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 16.sp,
+                                        lineHeight = 20.sp,
+                                        letterSpacing = 0.sp,
+                                        textAlign = TextAlign.Center,
+                                        color = HrTheme.colorScheme.primary
+                                    )
                                 )
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(56.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(
-                                    color = HrTheme.colorScheme.primary,
-                                    shape = RoundedCornerShape(12.dp)
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(56.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(
+                                        color = HrTheme.colorScheme.primary,
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                    .clickable {
+                                        onEvent(HrBoardEvent.OnApplyFiltersClick)
+                                    },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "Apply Filters",
+                                    style = TextStyle(
+                                        fontFamily = Manrope,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 16.sp,
+                                        lineHeight = 20.sp,
+                                        letterSpacing = 0.sp,
+                                        textAlign = TextAlign.Center,
+                                        color = HrTheme.colorScheme.onPrimary
+                                    )
                                 )
-                                .clickable {
-                                    onEvent(HrBoardEvent.OnApplyFiltersClick)
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "Apply Filters",
-                                style = TextStyle(
-                                    fontFamily = Manrope,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 16.sp,
-                                    lineHeight = 20.sp,
-                                    letterSpacing = 0.sp,
-                                    textAlign = TextAlign.Center,
-                                    color = HrTheme.colorScheme.onPrimary
-                                )
-                            )
+                            }
                         }
                     }
                 }

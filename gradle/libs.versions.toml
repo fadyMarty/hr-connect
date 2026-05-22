@@ -21,6 +21,7 @@ filekit = "0.14.1"
 krop = "0.2.0"
 llamatik = "1.4.0"
 coreSplashscreen = "1.2.0"
+haze = "1.7.2"
 logcat = "0.4"
 pdfViewer = "2.4.0"
 appmetricaAnalytics = "8.2.0"
@@ -76,6 +77,7 @@ krop-ui = { module = "com.attafitamim.krop:ui", version.ref = "krop" }
 krop-extensions-filekit = { module = "com.attafitamim.krop:extensions-filekit", version.ref = "krop" }
 llamatik = { module = "com.llamatik:library", version.ref = "llamatik" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 logcat = { module = "com.squareup.logcat:logcat", version.ref = "logcat" }
 pdf-viewer = { module = "io.github.afreakyelf:Pdf-Viewer", version.ref = "pdfViewer" }
 appmetrica-analytics = { module = "io.appmetrica.analytics:analytics", version.ref = "appmetricaAnalytics" }
