@@ -27,7 +27,7 @@ class CandidateDetailViewModel(
 
     fun onEvent(event: CandidateDetailEvent) {
         when (event) {
-            is CandidateDetailEvent.OnPhotoPicked -> {
+            is CandidateDetailEvent.OnPhotoSelected -> {
                 viewModelScope.launch {
                     _state.update {
                         it.copy(

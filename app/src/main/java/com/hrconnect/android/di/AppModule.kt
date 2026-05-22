@@ -25,6 +25,7 @@ import com.hrconnect.android.domain.validator.RegisterValidator
 import com.hrconnect.android.presentation.assistant.AssistantViewModel
 import com.hrconnect.android.presentation.candidate_detail.CandidateDetailViewModel
 import com.hrconnect.android.presentation.create_vacancy.CreateVacancyViewModel
+import com.hrconnect.android.presentation.hr_board.HrBoardViewModel
 import com.hrconnect.android.presentation.loading.LoadingViewModel
 import com.hrconnect.android.presentation.login.LoginViewModel
 import com.hrconnect.android.presentation.register.RegisterViewModel
@@ -113,4 +114,5 @@ val appModule = module {
     viewModelOf(::CreateVacancyViewModel)
     viewModelOf(::AssistantViewModel)
     viewModelOf(::CandidateDetailViewModel)
+    viewModelOf(::HrBoardViewModel)
 }

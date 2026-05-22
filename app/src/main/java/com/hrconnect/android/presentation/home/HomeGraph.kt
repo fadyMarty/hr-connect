@@ -30,6 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.hrconnect.android.R
 import com.hrconnect.android.presentation.candidate_detail.CandidateDetailRoot
+import com.hrconnect.android.presentation.hr_board.HrBoardRoot
 import com.hrconnect.android.presentation.navigation.Route
 import com.hrconnect.android.presentation.vacancy_detail.VacancyDetailRoot
 import com.hrconnect.android.presentation.vacancy_list.VacancyListRoot
@@ -93,7 +94,7 @@ fun HomeGraph(
                 startDestination = Route.HrBoard
             ) {
                 composable<Route.HrBoard> {
-
+                    HrBoardRoot()
                 }
                 navigation<Route.CandidateGraph>(
                     startDestination = Route.CandidateDetail

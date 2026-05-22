@@ -36,11 +36,7 @@ class CreateVacancyViewModel : ViewModel() {
             is CreateVacancyEvent.OnDeleteFileClick -> {
                 _state.update {
                     it.copy(
-                        supportDocuments = it.supportDocuments
-                            .toMutableList()
-                            .apply {
-                                remove(event.file)
-                            }
+                        supportDocuments = it.supportDocuments - event.file
                     )
                 }
             }

@@ -84,7 +84,7 @@ fun CandidateDetailScreen(
         file?.let {
             scope.launch {
                 imageCropper.cropPhotoFile(file) { bytes ->
-                    onEvent(CandidateDetailEvent.OnPhotoPicked(bytes))
+                    onEvent(CandidateDetailEvent.OnPhotoSelected(bytes))
                 }
             }
         }
@@ -95,7 +95,7 @@ fun CandidateDetailScreen(
         file?.let {
             scope.launch {
                 imageCropper.cropPhotoFile(file) { bytes ->
-                    onEvent(CandidateDetailEvent.OnPhotoPicked(bytes))
+                    onEvent(CandidateDetailEvent.OnPhotoSelected(bytes))
                 }
             }
         }
