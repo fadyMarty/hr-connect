@@ -1,6 +1,5 @@
 package com.hrconnect.android.presentation.candidate_detail.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -59,7 +57,6 @@ import com.hrconnect.uikit.common.theme.Manrope
 @Composable
 fun HrImageCropperDialog(
     state: CropState,
-    onRetakeClick: () -> Unit,
     modifier: Modifier = Modifier,
     style: CropperStyle = cropperStyle(
         rectColor = Color.Transparent,
@@ -87,70 +84,12 @@ fun HrImageCropperDialog(
             Column(
                 modifier = modifier.fillMaxWidth()
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                        .dropShadow(
-                            shape = RectangleShape,
-                            shadow = Shadow(
-                                offset = DpOffset(0.dp, 1.dp),
-                                radius = 2.dp,
-                                alpha = 0.05f
-                            )
-                        )
-                        .background(HrTheme.colorScheme.container)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(horizontal = 20.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            modifier = Modifier
-                                .clickable(
-                                    interactionSource = null,
-                                    indication = ripple(bounded = false)
-                                ) {
-                                    state.done(accept = false)
-                                }
-                                .padding(8.dp)
-                                .size(16.dp),
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
-                            contentDescription = null,
-                            tint = HrTheme.colorScheme.primaryVariant
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = "Update Profile Photo",
-                            style = TextStyle(
-                                fontFamily = Manrope,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 18.sp,
-                                lineHeight = 28.sp,
-                                letterSpacing = (-0.45).sp
-                            )
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            modifier = Modifier
-                                .size(20.dp)
-                                .clickable(
-                                    interactionSource = null,
-                                    indication = ripple(bounded = false),
-                                    onClick = {}
-                                ),
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_help),
-                            contentDescription = null,
-                            tint = HrTheme.colorScheme.bottomBarContent
-                        )
-                    }
-                    HorizontalDivider(
-                        color = HrTheme.colorScheme.bottomBarBorder
-                    )
-                }
+                HrImageCropperTopBar(
+                    onBackClick = {
+                        state.done(accept = false)
+                    },
+                    onHelpClick = {}
+                )
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -161,46 +100,9 @@ fun HrImageCropperDialog(
                         modifier = Modifier.fillMaxSize(),
                         state = state
                     )
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .fillMaxWidth()
-                            .padding(horizontal = 55.dp)
-                            .aspectRatio(1f)
-                            .border(
-                                width = 2.dp,
-                                color = Color.White,
-                                shape = CircleShape
-                            )
+                    TooltipInstructions(
+                        modifier = Modifier.align(Alignment.BottomCenter)
                     )
-                    Image(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .fillMaxWidth()
-                            .padding(horizontal = 45.dp),
-                        imageVector = ImageVector.vectorResource(R.drawable.img_guidance_ui),
-                        contentDescription = null
-                    )
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .padding(bottom = 32.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(
-                                HrTheme.colorScheme.container.copy(alpha = 0.9f)
-                            )
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 8.dp
-                            )
-                    ) {
-                        Text(
-                            text = "Pinch to zoom and drag to reposition",
-                            style = HrTheme.typography.bodyMedium,
-                            color = HrTheme.colorScheme.secondary,
-                            textAlign = TextAlign.Center
-                        )
-                    }
                     Column(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
@@ -222,128 +124,235 @@ fun HrImageCropperDialog(
                         )
                     }
                 }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(96.dp)
-                        .dropShadow(
-                            shape = RectangleShape,
-                            shadow = Shadow(
-                                offset = DpOffset(0.dp, (-4).dp),
-                                radius = 12.dp,
-                                alpha = 0.05f
-                            )
-                        )
-                        .background(HrTheme.colorScheme.container)
-                ) {
-                    HorizontalDivider(
-                        color = HrTheme.colorScheme.bottomBarBorder
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(horizontal = 24.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .size(110.dp, 56.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .border(
-                                    width = 1.dp,
-                                    color = HrTheme.colorScheme.primaryVariant,
-                                    shape = RoundedCornerShape(12.dp)
-                                )
-                                .clickable {
-                                    onRetakeClick()
-                                    state.done(accept = false)
-                                },
-                            horizontalArrangement = Arrangement.spacedBy(
-                                space = 7.99.dp,
-                                alignment = Alignment.CenterHorizontally
-                            ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(16.dp),
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_refresh),
-                                contentDescription = null,
-                                tint = HrTheme.colorScheme.primary
-
-                            )
-                            Text(
-                                text = "Retake",
-                                style = TextStyle(
-                                    fontFamily = Manrope,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 16.sp,
-                                    lineHeight = 20.sp,
-                                    letterSpacing = 0.sp,
-                                    textAlign = TextAlign.Center,
-                                    color = HrTheme.colorScheme.primary
-                                )
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(56.dp)
-                                .dropShadow(
-                                    shape = RoundedCornerShape(12.dp),
-                                    shadow = Shadow(
-                                        offset = DpOffset(0.dp, 4.dp),
-                                        radius = 6.dp,
-                                        spread = (-4).dp,
-                                        color = HrTheme.colorScheme.primary,
-                                        alpha = 0.2f
-                                    )
-                                )
-                                .dropShadow(
-                                    shape = RoundedCornerShape(12.dp),
-                                    shadow = Shadow(
-                                        offset = DpOffset(0.dp, 10.dp),
-                                        radius = 15.dp,
-                                        spread = (-3).dp,
-                                        color = HrTheme.colorScheme.primary,
-                                        alpha = 0.2f
-                                    )
-                                )
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(HrTheme.colorScheme.primary)
-                                .clickable {
-                                    state.done(accept = true)
-                                },
-                            horizontalArrangement = Arrangement.spacedBy(
-                                space = 8.dp,
-                                alignment = Alignment.CenterHorizontally
-                            ),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(16.3.dp, 12.02.dp),
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_check),
-                                contentDescription = null,
-                                tint = HrTheme.colorScheme.onPrimary
-                            )
-                            Text(
-                                text = "Apply",
-                                style = TextStyle(
-                                    fontFamily = Manrope,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 16.sp,
-                                    lineHeight = 20.sp,
-                                    letterSpacing = 0.sp,
-                                    textAlign = TextAlign.Center,
-                                    color = HrTheme.colorScheme.onPrimary
-                                )
-                            )
-                        }
+                HrImageCropperBottomBar(
+                    onRetakeClick = {
+                        state.done(accept = false)
+                    },
+                    onApplyClick = {
+                        state.done(accept = true)
                     }
-                }
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun HrImageCropperTopBar(
+    onBackClick: () -> Unit,
+    onHelpClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(64.dp)
+            .dropShadow(
+                shape = RectangleShape,
+                shadow = Shadow(
+                    offset = DpOffset(0.dp, 1.dp),
+                    radius = 2.dp,
+                    alpha = 0.05f
+                )
+            )
+            .background(HrTheme.colorScheme.container)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(horizontal = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                modifier = Modifier
+                    .clickable(
+                        interactionSource = null,
+                        indication = ripple(bounded = false),
+                        onClick = onBackClick
+                    )
+                    .padding(8.dp)
+                    .size(16.dp),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
+                contentDescription = null,
+                tint = HrTheme.colorScheme.primaryVariant
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = "Update Profile Photo",
+                style = TextStyle(
+                    fontFamily = Manrope,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    lineHeight = 28.sp,
+                    letterSpacing = (-0.45).sp
+                )
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                modifier = Modifier
+                    .size(20.dp)
+                    .clickable(
+                        interactionSource = null,
+                        indication = ripple(bounded = false),
+                        onClick = onHelpClick
+                    ),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_help),
+                contentDescription = null,
+                tint = HrTheme.colorScheme.bottomBarContent
+            )
+        }
+        HorizontalDivider(
+            color = HrTheme.colorScheme.bottomBarBorder
+        )
+    }
+}
+
+@Composable
+private fun HrImageCropperBottomBar(
+    onRetakeClick: () -> Unit,
+    onApplyClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(96.dp)
+            .dropShadow(
+                shape = RectangleShape,
+                shadow = Shadow(
+                    offset = DpOffset(0.dp, (-4).dp),
+                    radius = 12.dp,
+                    alpha = 0.05f
+                )
+            )
+            .background(HrTheme.colorScheme.container)
+    ) {
+        HorizontalDivider(
+            color = HrTheme.colorScheme.bottomBarBorder
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(horizontal = 24.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                modifier = Modifier
+                    .size(110.dp, 56.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .border(
+                        width = 1.dp,
+                        color = HrTheme.colorScheme.primaryVariant,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .clickable(onClick = onRetakeClick),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 7.99.dp,
+                    alignment = Alignment.CenterHorizontally
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(16.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_refresh),
+                    contentDescription = null,
+                    tint = HrTheme.colorScheme.primary
+
+                )
+                Text(
+                    text = "Retake",
+                    style = TextStyle(
+                        fontFamily = Manrope,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp,
+                        lineHeight = 20.sp,
+                        letterSpacing = 0.sp,
+                        textAlign = TextAlign.Center,
+                        color = HrTheme.colorScheme.primary
+                    )
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(56.dp)
+                    .dropShadow(
+                        shape = RoundedCornerShape(12.dp),
+                        shadow = Shadow(
+                            offset = DpOffset(0.dp, 4.dp),
+                            radius = 6.dp,
+                            spread = (-4).dp,
+                            color = HrTheme.colorScheme.primary,
+                            alpha = 0.2f
+                        )
+                    )
+                    .dropShadow(
+                        shape = RoundedCornerShape(12.dp),
+                        shadow = Shadow(
+                            offset = DpOffset(0.dp, 10.dp),
+                            radius = 15.dp,
+                            spread = (-3).dp,
+                            color = HrTheme.colorScheme.primary,
+                            alpha = 0.2f
+                        )
+                    )
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(HrTheme.colorScheme.primary)
+                    .clickable(onClick = onApplyClick),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 8.dp,
+                    alignment = Alignment.CenterHorizontally
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(16.3.dp, 12.02.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_check),
+                    contentDescription = null,
+                    tint = HrTheme.colorScheme.onPrimary
+                )
+                Text(
+                    text = "Apply",
+                    style = TextStyle(
+                        fontFamily = Manrope,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp,
+                        lineHeight = 20.sp,
+                        letterSpacing = 0.sp,
+                        textAlign = TextAlign.Center,
+                        color = HrTheme.colorScheme.onPrimary
+                    )
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun TooltipInstructions(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .padding(bottom = 32.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(
+                HrTheme.colorScheme.container.copy(alpha = 0.9f)
+            )
+            .padding(
+                horizontal = 16.dp,
+                vertical = 8.dp
+            )
+    ) {
+        Text(
+            text = "Pinch to zoom and drag to reposition",
+            style = HrTheme.typography.bodyMedium,
+            color = HrTheme.colorScheme.secondary,
+            textAlign = TextAlign.Center
+        )
     }
 }
 

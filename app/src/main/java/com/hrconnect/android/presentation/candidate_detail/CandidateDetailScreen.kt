@@ -243,8 +243,7 @@ fun CandidateDetailScreen(
 
     if (cropState != null) {
         HrImageCropperDialog(
-            state = cropState,
-            onRetakeClick = {}
+            state = cropState
         )
     }
 }

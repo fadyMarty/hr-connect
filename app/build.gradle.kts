@@ -70,6 +70,8 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.filekit.core)
     implementation(libs.filekit.dialogs.compose)
+    implementation(libs.krop.ui)
+    implementation(libs.krop.extensions.filekit)
     implementation(libs.llamatik)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.logcat)
@@ -90,9 +92,6 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.truth)
     androidTestImplementation(libs.mockk.android)
-
-    implementation(libs.krop.ui)
-    implementation(libs.krop.extensions.filekit)
 
     implementation(project(":uikit"))
     implementation(project(":netlib"))
