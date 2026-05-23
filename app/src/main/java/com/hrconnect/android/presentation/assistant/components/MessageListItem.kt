@@ -24,15 +24,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hrconnect.android.domain.model.Message
+import com.hrconnect.android.domain.model.ChatMessage
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.common.theme.Manrope
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun ChatMessage(
-    message: Message,
-    isLoading: Boolean,
+fun MessageListItem(
+    message: ChatMessage,
     modifier: Modifier = Modifier,
 ) {
     val chatBubbleShape = RoundedCornerShape(
@@ -92,7 +94,7 @@ fun ChatMessage(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (isLoading) {
+            if (message.isLoading) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -153,7 +155,7 @@ fun ChatMessage(
             }
         }
         Text(
-            text = DateTimeFormatter.ofPattern("hh:mm a").format(message.createdAt),
+            text = formatTimestamp(message.timestamp),
             style = TextStyle(
                 fontFamily = Manrope,
                 fontWeight = FontWeight.Normal,
@@ -166,16 +168,24 @@ fun ChatMessage(
     }
 }
 
+private fun formatTimestamp(timestamp: Long): String {
+    val dateTime = LocalDateTime.ofInstant(
+        Instant.ofEpochMilli(timestamp),
+        ZoneId.systemDefault()
+    )
+    return DateTimeFormatter.ofPattern("hh:mm a").format(dateTime)
+}
+
 @Preview
 @Composable
-private fun ChatMessagePreview() {
+private fun MessageListItemPreview() {
     HrTheme {
-        ChatMessage(
-            message = Message(
+        MessageListItem(
+            message = ChatMessage(
                 content = "",
-                isFromUser = false
-            ),
-            isLoading = true
+                isFromUser = false,
+                isLoading = true
+            )
         )
     }
 }

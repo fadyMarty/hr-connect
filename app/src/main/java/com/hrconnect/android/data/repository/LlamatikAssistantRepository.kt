@@ -41,7 +41,9 @@ class LlamatikAssistantRepository(
                 onDone = {
                     close()
                 },
-                onError = {}
+                onError = { error ->
+                    close(Exception(error))
+                }
             )
             awaitClose()
         }

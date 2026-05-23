@@ -31,7 +31,9 @@ class LiteRtAssistantRepository(
                     }
                 }
             }
-            val engineConfig = EngineConfig(modelPath = modelFile.absolutePath)
+            val engineConfig = EngineConfig(
+                modelPath = modelFile.absolutePath
+            )
             engine = Engine(engineConfig)
             engine.initialize()
             val conversationConfig = ConversationConfig(

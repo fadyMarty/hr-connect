@@ -9,6 +9,7 @@ activityCompose = "1.13.0"
 kotlin = "2.3.21"
 composeBom = "2026.05.01"
 appcompat = "1.7.1"
+litertlmAndroid = "0.12.0"
 material = "1.14.0"
 
 # App
@@ -75,6 +76,7 @@ filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "file
 filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
 krop-ui = { module = "com.attafitamim.krop:ui", version.ref = "krop" }
 krop-extensions-filekit = { module = "com.attafitamim.krop:extensions-filekit", version.ref = "krop" }
+litertlm-android = { module = "com.google.ai.edge.litertlm:litertlm-android", version.ref = "litertlmAndroid" }
 llamatik = { module = "com.llamatik:library", version.ref = "llamatik" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }

@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.filekit.dialogs.compose)
     implementation(libs.krop.ui)
     implementation(libs.krop.extensions.filekit)
+    implementation(libs.litertlm.android)
     implementation(libs.llamatik)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.haze)
@@ -93,9 +94,6 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.truth)
     androidTestImplementation(libs.mockk.android)
-
-    implementation("com.google.ai.edge.litertlm:litertlm-android:0.12.0")
-
 
     implementation(project(":uikit"))
     implementation(project(":netlib"))
