@@ -48,9 +48,4 @@ class LiteRtAssistantRepository(
             it.toString()
         }
     }
-
-    override fun close() {
-        conversation.close()
-        engine.close()
-    }
 }

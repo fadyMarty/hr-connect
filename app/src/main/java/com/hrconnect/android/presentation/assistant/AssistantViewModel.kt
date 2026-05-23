@@ -101,9 +101,4 @@ class AssistantViewModel(
             }
         }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        assistantRepository.close()
-    }
 }

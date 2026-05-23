@@ -48,8 +48,4 @@ class LlamatikAssistantRepository(
             awaitClose()
         }
     }
-
-    override fun close() {
-        LlamaBridge.shutdown()
-    }
 }

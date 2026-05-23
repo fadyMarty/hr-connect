@@ -447,6 +447,7 @@ fun HrBoardScreen(
                             .hazeEffect(
                                 state = hazeState,
                                 style = HazeStyle(
+                                    backgroundColor = HrTheme.colorScheme.container,
                                     tint = HazeTint(
                                         color = HrTheme.colorScheme.container.copy(alpha = 0.3f)
                                     ),
