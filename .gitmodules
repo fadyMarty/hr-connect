@@ -1,6 +1,6 @@
 [submodule "hr-connect-uikit"]
 	path = hr-connect-uikit
-	url = git@github.com:fadyMarty/hr-connect-uikit.git
+	url = https://github.com/fadyMarty/hr-connect-uikit
 [submodule "hr-connect-netlib"]
 	path = hr-connect-netlib
-	url = git@github.com:fadyMarty/hr-connect-netlib.git
+	url = https://github.com/fadyMarty/hr-connect-netlib

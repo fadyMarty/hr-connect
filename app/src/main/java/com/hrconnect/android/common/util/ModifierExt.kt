@@ -9,27 +9,29 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 fun Modifier.dashedBorder(
     color: Color,
     shape: Shape,
-    strokeWidth: Dp,
-    dashLength: Dp,
-    gapLength: Dp,
-    cap: StrokeCap = StrokeCap.Butt,
-) = this.drawWithContent {
+    width: Dp = 2.dp,
+    dashLength: Dp = 6.dp,
+    gapLength: Dp = 4.dp,
+    strokeCap: StrokeCap = StrokeCap.Butt,
+) = drawWithContent {
     val outline = shape.createOutline(size, layoutDirection, this)
     val dashedStroke = Stroke(
-        cap = cap,
-        width = strokeWidth.toPx(),
+        width = width.toPx(),
+        cap = strokeCap,
         pathEffect = PathEffect.dashPathEffect(
             intervals = floatArrayOf(dashLength.toPx(), gapLength.toPx())
         )
     )
+
     drawContent()
     drawOutline(
         outline = outline,
-        style = dashedStroke,
-        color = color
+        color = color,
+        style = dashedStroke
     )
 }
