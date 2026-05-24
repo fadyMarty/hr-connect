@@ -141,7 +141,7 @@ fun CreateVacancySecondStep(
                             .dashedBorder(
                                 color = HrTheme.colorScheme.border,
                                 shape = RoundedCornerShape(12.dp),
-                                width = 2.dp,
+                                strokeWidth = 2.dp,
                                 dashLength = 6.dp,
                                 gapLength = 4.dp
                             )

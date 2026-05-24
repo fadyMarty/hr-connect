@@ -14,14 +14,14 @@ import androidx.compose.ui.unit.dp
 fun Modifier.dashedBorder(
     color: Color,
     shape: Shape,
-    width: Dp = 2.dp,
+    strokeWidth: Dp = 2.dp,
     dashLength: Dp = 6.dp,
     gapLength: Dp = 4.dp,
     strokeCap: StrokeCap = StrokeCap.Butt,
 ) = drawWithContent {
     val outline = shape.createOutline(size, layoutDirection, this)
     val dashedStroke = Stroke(
-        width = width.toPx(),
+        width = strokeWidth.toPx(),
         cap = strokeCap,
         pathEffect = PathEffect.dashPathEffect(
             intervals = floatArrayOf(dashLength.toPx(), gapLength.toPx())
