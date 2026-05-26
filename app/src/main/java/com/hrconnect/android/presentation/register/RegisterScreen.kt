@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
@@ -38,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hrconnect.android.common.util.Constants
 import com.hrconnect.android.common.util.ObserveAsEvents
 import com.hrconnect.android.common.util.TestTags
+import com.hrconnect.android.common.util.supportingTextColor
 import com.hrconnect.uikit.common.theme.HrTheme
 import com.hrconnect.uikit.presentation.components.buttons.PrimaryButton
 import com.hrconnect.uikit.presentation.components.checkbox.HrCheckbox
@@ -176,7 +178,11 @@ fun RegisterScreen(
                         )
                     }
                     Input(
-                        inputModifier = Modifier.testTag(TestTags.EMAIL_INPUT),
+                        inputModifier = Modifier
+                            .testTag(TestTags.EMAIL_INPUT)
+                            .semantics {
+                                supportingTextColor = emailSupportingTextColor
+                            },
                         label = "Email",
                         state = state.emailState,
                         placeholder = "name@domain.ru",
@@ -184,7 +190,11 @@ fun RegisterScreen(
                         isError = !state.isEmailValid
                     )
                     PasswordInput(
-                        inputModifier = Modifier.testTag(TestTags.PASSWORD_INPUT),
+                        inputModifier = Modifier
+                            .testTag(TestTags.PASSWORD_INPUT)
+                            .semantics {
+                                supportingTextColor = passwordSupportingTextColor
+                            },
                         state = state.passwordState,
                         isPasswordVisible = state.isPasswordVisible,
                         onTogglePasswordVisibility = {

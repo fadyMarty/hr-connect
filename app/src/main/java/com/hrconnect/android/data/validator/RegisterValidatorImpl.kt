@@ -18,7 +18,8 @@ class RegisterValidatorImpl : RegisterValidator {
      * @return [Boolean] результат валидации
      */
     override fun validateEmail(email: String): Boolean {
-        TODO()
+        val emailPattern = "[a-z0-9]+@[a-z0-9]+\\.[a-z]+"
+        return emailPattern.toRegex().matches(email)
     }
 
     /**
@@ -29,7 +30,7 @@ class RegisterValidatorImpl : RegisterValidator {
      * @return [Boolean] результат валидации
      */
     override fun validatePassword(password: String): Boolean {
-        TODO()
+        return password.length >= 8
     }
 
     /**
@@ -41,6 +42,6 @@ class RegisterValidatorImpl : RegisterValidator {
      * @return [Boolean] результат валидации
      */
     override fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
-        TODO()
+        return password == confirmPassword
     }
 }
