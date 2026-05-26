@@ -10,6 +10,11 @@ import com.hrconnect.android.domain.validator.RegisterValidator
  */
 class RegisterValidatorImpl : RegisterValidator {
 
+    companion object {
+        private const val EMAIL_PATTERN = "[a-z0-9]+@[a-z0-9]+\\.[a-z]+"
+        private const val MIN_PASSWORD_LENGTH = 8
+    }
+
     /**
      * Функция для валидации Email
      *
@@ -18,8 +23,7 @@ class RegisterValidatorImpl : RegisterValidator {
      * @return [Boolean] результат валидации
      */
     override fun validateEmail(email: String): Boolean {
-        val emailPattern = "[a-z0-9]+@[a-z0-9]+\\.[a-z]+"
-        return emailPattern.toRegex().matches(email)
+        return EMAIL_PATTERN.toRegex().matches(email)
     }
 
     /**
@@ -30,7 +34,7 @@ class RegisterValidatorImpl : RegisterValidator {
      * @return [Boolean] результат валидации
      */
     override fun validatePassword(password: String): Boolean {
-        return password.length >= 8
+        return password.length >= MIN_PASSWORD_LENGTH
     }
 
     /**

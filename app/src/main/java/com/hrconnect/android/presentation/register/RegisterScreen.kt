@@ -215,9 +215,9 @@ fun RegisterScreen(
                         },
                         label = "Подтвердить пароль",
                         placeholder = "••••••••",
-                        supportingText = if (state.confirmPasswordError != null) {
-                            stringResource(state.confirmPasswordError)
-                        } else null,
+                        supportingText = state.confirmPasswordError?.let {
+                            stringResource(it)
+                        },
                         isError = state.confirmPasswordError != null
                     )
                     HrCheckbox(
