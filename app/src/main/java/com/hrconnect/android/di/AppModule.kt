@@ -5,6 +5,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.hrconnect.android.common.util.Constants
 import com.hrconnect.android.data.manager.TokenManagerImpl
 import com.hrconnect.android.data.remote.AuthInterceptor
+import com.hrconnect.android.data.remote.CacheInterceptor
 import com.hrconnect.android.data.repository.AuthRepositoryImpl
 import com.hrconnect.android.data.repository.DictionaryRepositoryImpl
 import com.hrconnect.android.data.repository.EmployeeRepositoryImpl
@@ -39,9 +40,11 @@ import com.hrconnect.netlib.data.remote.EmployeeApi
 import com.hrconnect.netlib.data.remote.HiringApi
 import com.hrconnect.netlib.data.remote.VacancyApi
 import kotlinx.serialization.json.Json
+import okhttp3.Cache
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
@@ -53,23 +56,29 @@ val Context.dataStore by preferencesDataStore(name = Constants.DATASTORE_FILE_NA
 
 val appModule = module {
     singleOf(::AuthInterceptor)
+    singleOf(::CacheInterceptor)
     single {
-        Json {
-            ignoreUnknownKeys = true
-        }
+        val cacheSize = (10 * 1024 * 1024).toLong()
+        Cache(androidContext().cacheDir, cacheSize)
     }
     single {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         OkHttpClient.Builder()
+            .cache(get())
             .addInterceptor(loggingInterceptor)
             .addInterceptor(get<AuthInterceptor>())
+            .addInterceptor(get<CacheInterceptor>())
             .build()
     }
     single {
+        Json {
+            ignoreUnknownKeys = true
+        }
+    }
+    single {
         val contentType = "application/json".toMediaType()
-
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(get<Json>().asConverterFactory(contentType))
