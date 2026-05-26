@@ -1,11 +1,12 @@
 package com.hrconnect.android.presentation.register
 
+/**
+ * События на экране регистрации.
+ *
+ * Дата создания: 26-05-2026.
+ * Автор создания: 1.
+ */
 sealed interface RegisterEvent {
-    data object OnTogglePasswordVisibility : RegisterEvent
-    data object OnToggleConfirmPasswordVisibility : RegisterEvent
-    data object OnRegisterClick : RegisterEvent
-    data class OnAcceptTerms(val isAccepted: Boolean) : RegisterEvent
-    data object OnLoginClick : RegisterEvent
-    data object OnSuccess : RegisterEvent
     data class OnError(val message: String) : RegisterEvent
+    data object OnRegisterSuccess : RegisterEvent
 }

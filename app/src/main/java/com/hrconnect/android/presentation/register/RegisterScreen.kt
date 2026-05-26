@@ -5,71 +5,87 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.shadow.Shadow
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hrconnect.android.R
 import com.hrconnect.android.common.util.Constants
 import com.hrconnect.android.common.util.ObserveAsEvents
 import com.hrconnect.android.common.util.TestTags
 import com.hrconnect.uikit.common.theme.HrTheme
-import com.hrconnect.uikit.common.theme.Manrope
 import com.hrconnect.uikit.presentation.components.buttons.PrimaryButton
 import com.hrconnect.uikit.presentation.components.checkbox.HrCheckbox
 import com.hrconnect.uikit.presentation.components.inputs.Input
 import com.hrconnect.uikit.presentation.components.inputs.PasswordInput
+import kotlinx.coroutines.launch
+import logcat.LogPriority.INFO
+import logcat.logcat
 import org.koin.compose.viewmodel.koinViewModel
 
+/**
+ * Экран регистрации.
+ *
+ * Дата создания: 26-05-2026.
+ * Автор создания: 1.
+ */
 @Composable
 fun RegisterRoot(
     viewModel: RegisterViewModel = koinViewModel(),
     onLoginClick: () -> Unit,
+    onRegisterSuccess: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
-            RegisterEvent.OnSuccess -> onLoginClick()
-            else -> Unit
+            RegisterEvent.OnRegisterSuccess -> {
+                onRegisterSuccess()
+            }
+            is RegisterEvent.OnError -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(event.message)
+                }
+            }
         }
     }
 
     RegisterScreen(
         state = state,
-        onEvent = { event ->
-            when (event) {
-                RegisterEvent.OnLoginClick -> onLoginClick()
+        snackbarHostState = snackbarHostState,
+        onAction = { action ->
+            when (action) {
+                RegisterAction.OnLoginClick -> onLoginClick()
                 else -> Unit
             }
-            viewModel.onEvent(event)
+            viewModel.onAction(action)
         }
     )
 }
@@ -77,15 +93,34 @@ fun RegisterRoot(
 @Composable
 fun RegisterScreen(
     state: RegisterState,
-    onEvent: (RegisterEvent) -> Unit,
+    onAction: (RegisterAction) -> Unit,
+    snackbarHostState: SnackbarHostState,
 ) {
-    Scaffold { innerPadding ->
+    val emailSupportingTextColor = if (state.isEmailValid) {
+        HrTheme.colorScheme.fieldLabel
+    } else {
+        HrTheme.colorScheme.error
+    }
+    val passwordSupportingTextColor = if (state.isPasswordValid) {
+        HrTheme.colorScheme.fieldLabel
+    } else {
+        HrTheme.colorScheme.error
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        }
+    ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = 20.dp),
-            contentAlignment = Alignment.Center,
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 36.dp
+                ),
+            contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier = Modifier
@@ -101,33 +136,20 @@ fun RegisterScreen(
                     .clip(RoundedCornerShape(12.dp))
                     .background(HrTheme.colorScheme.container)
                     .padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.app_name),
-                        style = TextStyle(
-                            fontFamily = Manrope,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp,
-                            lineHeight = 32.sp,
-                            letterSpacing = (-0.6).sp,
-                            color = HrTheme.colorScheme.primaryVariant
-                        )
-                    )
-                    Text(
-                        modifier = Modifier.width(254.23.dp),
-                        text = "Modern Talent Engine for HR Excellence",
-                        style = HrTheme.typography.bodySmall,
-                        color = HrTheme.colorScheme.secondary,
-                        textAlign = TextAlign.Center
-                    )
-                }
+                Text(
+                    text = "HR Connect",
+                    style = HrTheme.typography.screenHeader,
+                    color = HrTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Портал управления талантами",
+                    style = HrTheme.typography.fieldLabel,
+                    color = HrTheme.colorScheme.secondary
+                )
+                Spacer(modifier = Modifier.height(24.dp))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -140,130 +162,130 @@ fun RegisterScreen(
                             modifier = Modifier.weight(1f),
                             inputModifier = Modifier.testTag(TestTags.FIRST_NAME_INPUT),
                             state = state.firstNameState,
-                            label = "First Name",
+                            label = "Имя",
+                            placeholder = "Джон",
                             isError = !state.isFirstNameValid
                         )
                         Input(
                             modifier = Modifier.weight(1f),
                             inputModifier = Modifier.testTag(TestTags.LAST_NAME_INPUT),
                             state = state.lastNameState,
-                            label = "Last Name",
+                            label = "Фамилия",
+                            placeholder = "Доу",
                             isError = !state.isLastNameValid
                         )
                     }
                     Input(
                         inputModifier = Modifier.testTag(TestTags.EMAIL_INPUT),
-                        state = state.emailState,
                         label = "Email",
-                        supportingText = state.emailError?.let { emailError ->
-                            stringResource(emailError)
-                        },
-                        isError = state.emailError != null
+                        state = state.emailState,
+                        placeholder = "name@domain.ru",
+                        supportingText = "Только строчные буквы и цифры (name@domain.ru)",
+                        isError = !state.isEmailValid
                     )
                     PasswordInput(
                         inputModifier = Modifier.testTag(TestTags.PASSWORD_INPUT),
                         state = state.passwordState,
                         isPasswordVisible = state.isPasswordVisible,
                         onTogglePasswordVisibility = {
-                            onEvent(RegisterEvent.OnTogglePasswordVisibility)
+                            onAction(RegisterAction.OnTogglePasswordVisibility)
+                            logcat(INFO) { "Изменена видимость пароля на ${state.isPasswordVisible}" }
                         },
-                        label = "Password",
+                        label = "Пароль",
                         placeholder = "••••••••",
-                        supportingText = state.passwordError?.let { passwordError ->
-                            stringResource(passwordError)
-                        },
-                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
-                        isError = state.passwordError != null
+                        isError = !state.isPasswordValid
                     )
                     PasswordInput(
                         inputModifier = Modifier.testTag(TestTags.CONFIRM_PASSWORD_INPUT),
                         state = state.confirmPasswordState,
                         isPasswordVisible = state.isConfirmPasswordVisible,
                         onTogglePasswordVisibility = {
-                            onEvent(RegisterEvent.OnToggleConfirmPasswordVisibility)
+                            onAction(RegisterAction.OnToggleConfirmPasswordVisibility)
+                            logcat(INFO) { "Изменена видимость подтверждения пароля на ${state.isConfirmPasswordVisible}" }
                         },
-                        label = "Confirm Password",
+                        label = "Подтвердить пароль",
                         placeholder = "••••••••",
-                        supportingText = state.confirmPasswordError?.let { confirmPasswordError ->
-                            stringResource(confirmPasswordError)
-                        },
-                        leadingIcon = ImageVector.vectorResource(R.drawable.ic_lock),
+                        supportingText = if (state.confirmPasswordError != null) {
+                            stringResource(state.confirmPasswordError)
+                        } else null,
                         isError = state.confirmPasswordError != null
                     )
                     HrCheckbox(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 27.62.dp),
-                        checkboxModifier = Modifier.testTag(TestTags.TERMS_CHECKBOX),
+                        modifier = Modifier.padding(end = 27.62.dp),
+                        checkboxModifier = Modifier
+                            .padding(top = 4.dp)
+                            .testTag(TestTags.TERMS_CHECKBOX),
                         checked = state.acceptedTerms,
                         onCheckedChange = {
-                            onEvent(RegisterEvent.OnAcceptTerms(it))
+                            onAction(RegisterAction.OnAcceptTerms(it))
                         },
                         label = buildAnnotatedString {
-                            append("I agree to the ")
+                            append("Я согласен с ")
                             withLink(
                                 link = LinkAnnotation.Url(
                                     url = Constants.TERMS_OF_USE_URL,
                                     styles = TextLinkStyles(
                                         style = SpanStyle(
-                                            color = HrTheme.colorScheme.primaryVariant
+                                            color = HrTheme.colorScheme.primary
                                         )
                                     )
                                 )
                             ) {
-                                append("terms of use")
+                                append("условиями использования")
                             }
-                            append(" and privacy policy.")
+                            append(" и политикой конфиденциальности.")
                         }
                     )
-                    PrimaryButton(
-                        modifier = Modifier
-                            .padding(vertical = 16.dp)
-                            .testTag(TestTags.REGISTER_BUTTON),
-                        label = "Register",
-                        onClick = {
-                            onEvent(RegisterEvent.OnRegisterClick)
-                        },
-                        enabled = state.firstNameState.text.isNotBlank() &&
-                                state.lastNameState.text.isNotBlank() &&
-                                state.emailState.text.isNotBlank() &&
-                                state.passwordState.text.isNotBlank() &&
-                                state.confirmPasswordState.text.isNotBlank() &&
-                                state.acceptedTerms
-                    )
                 }
+                Spacer(modifier = Modifier.height(32.dp))
+                PrimaryButton(
+                    modifier = Modifier.testTag(TestTags.REGISTER_BUTTON),
+                    label = "Зарегистрироваться",
+                    onClick = {
+                        onAction(RegisterAction.OnRegisterClick)
+                        logcat(INFO) { "Нажата кнопка регистрации" }
+                    },
+                    enabled = state.firstNameState.text.isNotBlank() &&
+                            state.lastNameState.text.isNotBlank() &&
+                            state.emailState.text.isNotBlank() &&
+                            state.passwordState.text.isNotBlank() &&
+                            state.confirmPasswordState.text.isNotBlank() &&
+                            state.acceptedTerms
+                )
+                Spacer(modifier = Modifier.height(40.dp))
                 Text(
                     text = buildAnnotatedString {
-                        append("Already have an account? ")
+                        append("У тебя уже есть аккаунт? ")
                         withLink(
                             link = LinkAnnotation.Clickable(
-                                tag = "login",
+                                tag = "LOGIN",
                                 styles = TextLinkStyles(
                                     style = SpanStyle(
-                                        color = HrTheme.colorScheme.primaryVariant
+                                        color = HrTheme.colorScheme.primary
                                     )
                                 )
                             ) {
-                                onEvent(RegisterEvent.OnLoginClick)
+                                onAction(RegisterAction.OnLoginClick)
+                                logcat(INFO) { "Нажат текст входа в аккаунт" }
                             }
                         ) {
-                            append("Sign in")
+                            append("Войти")
                         }
-                    },
-                    style = HrTheme.typography.bodySmall
+                    }
                 )
             }
         }
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
-private fun RegisterScreenPreview() {
+private fun Preview() {
     HrTheme {
         RegisterScreen(
             state = RegisterState(),
-            onEvent = {}
+            onAction = {},
+            snackbarHostState = SnackbarHostState()
         )
     }
 }

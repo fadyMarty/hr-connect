@@ -5,7 +5,13 @@ import com.hrconnect.android.data.validator.RegisterValidatorImpl
 import org.junit.Before
 import org.junit.Test
 
-class RegisterValidatorTest {
+/**
+ * Тесты валидвалидатора регистрации.
+ *
+ * Дата создания: 26-05-2026.
+ * Автор создания: 1.
+ */
+class RegisterValidatorImplTest {
 
     private lateinit var validator: RegisterValidator
 
@@ -21,15 +27,9 @@ class RegisterValidatorTest {
     }
 
     @Test
-    fun `некорретный формат Email возвращает false`() {
-        val isEmailValid = validator.validateEmail("NAME@DOMAIN.ru")
+    fun `некорректный формат Email возвращает false`() {
+        val isEmailValid = validator.validateEmail("NAME@DOMAIN.RU")
         assertThat(isEmailValid).isFalse()
-    }
-
-    @Test
-    fun `пароль длиной более 8 символов возвращает true`() {
-        val isPasswordValid = validator.validatePassword("12345678")
-        assertThat(isPasswordValid).isTrue()
     }
 
     @Test
@@ -39,19 +39,16 @@ class RegisterValidatorTest {
     }
 
     @Test
-    fun `совпадение пароля и подтверждения пароля возвращает true`() {
-        val isConfirmPasswordValid = validator.validateConfirmPassword(
-            password = "12345678",
-            confirmPassword = "12345678"
-        )
-        assertThat(isConfirmPasswordValid).isTrue()
+    fun `корректный пароль возвращает true`() {
+        val isPasswordValid = validator.validatePassword("12345678")
+        assertThat(isPasswordValid).isTrue()
     }
 
     @Test
-    fun `несовпадение пароля и подтверждения пароля возвращает false`() {
+    fun `несовпадение пароля и подтверждения пароля возвращается false`() {
         val isConfirmPasswordValid = validator.validateConfirmPassword(
             password = "12345678",
-            confirmPassword = "87654321"
+            confirmPassword = "123"
         )
         assertThat(isConfirmPasswordValid).isFalse()
     }

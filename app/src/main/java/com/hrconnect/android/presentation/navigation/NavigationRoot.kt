@@ -28,6 +28,13 @@ fun NavigationRoot(
                 RegisterRoot(
                     onLoginClick = {
                         navController.navigate(Route.Login)
+                    },
+                    onRegisterSuccess = {
+                        navController.navigate(Route.HomeGraph) {
+                            popUpTo(Route.AuthGraph) {
+                                inclusive = true
+                            }
+                        }
                     }
                 )
             }

@@ -104,15 +104,15 @@ val appModule = module {
         get<Retrofit>().create(CandidateApi::class.java)
     }
 
-    singleOf(::TokenManagerImpl).bind<TokenManager>()
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
     singleOf(::VacancyRepositoryImpl).bind<VacancyRepository>()
     singleOf(::EmployeeRepositoryImpl).bind<EmployeeRepository>()
     singleOf(::HiringRepositoryImpl).bind<HiringRepository>()
     singleOf(::DictionaryRepositoryImpl).bind<DictionaryRepository>()
-    singleOf(::RegisterValidatorImpl).bind<RegisterValidator>()
     singleOf(::LiteRtAssistantRepository).bind<AssistantRepository>()
     singleOf(::PhotoRepositoryImpl).bind<PhotoRepository>()
+    singleOf(::TokenManagerImpl).bind<TokenManager>()
+    singleOf(::RegisterValidatorImpl).bind<RegisterValidator>()
 
     viewModelOf(::SplashViewModel)
     viewModelOf(::RegisterViewModel)
