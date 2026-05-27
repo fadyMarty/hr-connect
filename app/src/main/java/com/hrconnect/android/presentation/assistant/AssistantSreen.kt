@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -288,7 +288,7 @@ fun AssistantScreen(
                             }
                         }
                     }
-                    items(state.messages) { message ->
+                    itemsIndexed(state.messages) { index, message ->
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -301,7 +301,10 @@ fun AssistantScreen(
                             } else Alignment.Start
                         ) {
                             MessageListItem(
-                                message = message
+                                message = message,
+                                onRetryClick = {
+                                    onEvent(AssistantEvent.OnRetryClick(index))
+                                }
                             )
                         }
                     }

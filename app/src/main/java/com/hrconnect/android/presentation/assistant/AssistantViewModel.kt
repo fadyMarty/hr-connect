@@ -37,27 +37,27 @@ class AssistantViewModel(
     fun onEvent(event: AssistantEvent) {
         when (event) {
             AssistantEvent.OnSendMessageClick -> sendMessage()
+            is AssistantEvent.OnRetryClick -> retry(event.index)
             else -> Unit
         }
     }
 
     private fun sendMessage() {
-        val message = state.value.messageState.text.toString()
-        if (message.isBlank()) {
+        val content = state.value.messageState.text.toString()
+        if (content.isBlank()) {
             return
         }
 
         viewModelScope.launch {
-            val messages = state.value.messages.toMutableList()
             val userMessage = ChatMessage(
-                content = message,
+                content = content,
                 isFromUser = true
             )
             val assistantMessage = ChatMessage(
                 content = "",
-                isFromUser = false,
-                isLoading = true
+                isFromUser = false
             )
+            val messages = state.value.messages.toMutableList()
             messages.add(0, userMessage)
             messages.add(0, assistantMessage)
             _state.update {
@@ -66,11 +66,13 @@ class AssistantViewModel(
                 )
             }
             state.value.messageState.clearText()
-            assistantRepository.sendMessage(message)
+
+            assistantRepository.sendMessage(content)
                 .catch { e ->
                     val updatedMessages = state.value.messages.toMutableList()
                     updatedMessages[0] = updatedMessages[0].copy(
                         error = e.message
+                            ?: "Произошла ошибка при обработке вашего запроса. Пожалуйста, попробуйте еще раз."
                     )
                     _state.update {
                         it.copy(
@@ -90,15 +92,46 @@ class AssistantViewModel(
                         )
                     }
                 }
-            val updatedMessages = state.value.messages.toMutableList()
-            updatedMessages[0] = updatedMessages[0].copy(
-                isLoading = false
+        }
+    }
+
+    private fun retry(index: Int) {
+        viewModelScope.launch {
+            val messages = state.value.messages.toMutableList()
+            messages[0] = messages[index].copy(
+                error = null
             )
             _state.update {
                 it.copy(
-                    messages = updatedMessages
+                    messages = messages
                 )
             }
+            val userMessage = state.value.messages[index + 1]
+            assistantRepository.sendMessage(userMessage.content)
+                .catch { e ->
+                    val updatedMessages = state.value.messages.toMutableList()
+                    updatedMessages[index] = updatedMessages[index].copy(
+                        error = e.message
+                            ?: "Произошла ошибка при обработке вашего запроса. Пожалуйста, попробуйте еще раз."
+                    )
+                    _state.update {
+                        it.copy(
+                            messages = updatedMessages
+                        )
+                    }
+                }
+                .collect { token ->
+                    val updatedMessages = state.value.messages.toMutableList()
+                    val currentMessage = updatedMessages[index]
+                    updatedMessages[index] = currentMessage.copy(
+                        content = currentMessage.content + token
+                    )
+                    _state.update {
+                        it.copy(
+                            messages = updatedMessages
+                        )
+                    }
+                }
         }
     }
 }

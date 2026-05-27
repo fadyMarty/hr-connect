@@ -6,5 +6,5 @@ object Constants {
     const val BASE_URL = "https://dummyjson.com/"
     const val TERMS_OF_USE_URL = "https://policies.google.com/terms"
     const val FORGOT_PASSWORD_URL = "https://myaccount.google.com/signinoptions/password"
-    const val MODEL_FILE_NAME = "gemma3-270m-it-q8.litertlm"
+    const val MODEL_FILE_NAME = "gemma3-1b-it-int4.task"
 }
