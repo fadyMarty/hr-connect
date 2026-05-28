@@ -59,7 +59,7 @@ class RegisterRootTest {
 
     @Test
     fun invalidEmail_showsError() {
-        fillValidFormInputs(email = "NAME@DOMAIN.RU")
+        fillFormInputs(email = "NAME@DOMAIN.RU")
         composeRule.onNodeWithTag(TestTags.REGISTER_BUTTON)
             .performClick()
 
@@ -73,7 +73,7 @@ class RegisterRootTest {
 
     @Test
     fun invalidPassword_showsError() {
-        fillValidFormInputs(password = "123")
+        fillFormInputs(password = "123")
         composeRule.onNodeWithTag(TestTags.REGISTER_BUTTON)
             .performClick()
 
@@ -85,7 +85,7 @@ class RegisterRootTest {
         ).assertIsDisplayed()
     }
 
-    private fun fillValidFormInputs(
+    private fun fillFormInputs(
         firstName: String = "Джон",
         lastName: String = "Доу",
         email: String = "name@domain.ru",

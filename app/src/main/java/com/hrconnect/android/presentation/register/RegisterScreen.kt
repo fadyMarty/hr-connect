@@ -255,12 +255,7 @@ fun RegisterScreen(
                         onAction(RegisterAction.OnRegisterClick)
                         logcat(INFO) { "Нажата кнопка регистрации" }
                     },
-                    enabled = state.firstNameState.text.isNotBlank() &&
-                            state.lastNameState.text.isNotBlank() &&
-                            state.emailState.text.isNotBlank() &&
-                            state.passwordState.text.isNotBlank() &&
-                            state.confirmPasswordState.text.isNotBlank() &&
-                            state.acceptedTerms
+                    enabled = state.acceptedTerms
                 )
                 Spacer(modifier = Modifier.height(40.dp))
                 Text(

@@ -38,7 +38,7 @@ class RegisterValidatorImpl : RegisterValidator {
     }
 
     /**
-     * Функнция для подтверждения пароля
+     * Функция для подтверждения пароля
      *
      * @param password пароль
      * @param confirmPassword подтверждение пароля
