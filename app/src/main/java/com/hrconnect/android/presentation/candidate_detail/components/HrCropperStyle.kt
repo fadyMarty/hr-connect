@@ -13,77 +13,61 @@ import com.attafitamim.krop.core.crop.AspectRatio
 import com.attafitamim.krop.core.crop.CircleCropShape
 import com.attafitamim.krop.core.crop.CropShape
 import com.attafitamim.krop.core.crop.CropperStyle
+import com.attafitamim.krop.core.crop.MainHandles
 
 fun hrCropperStyle(
     backgroundColor: Color = Color.Black,
     circleColor: Color = Color.White,
     circleStrokeWidth: Dp = 2.dp,
     cornerColor: Color = Color(0xFF004AC6),
-    cornerLength: Dp = 24.dp,
     cornerStrokeWidth: Dp = 2.dp,
+    cornerLength: Dp = 24.dp,
     touchRad: Dp = 55.dp,
-    overlay: Color = Color.Black.copy(alpha = 0.6f),
+    secondaryHandles: Boolean = true,
+    overlay: Color = Color.Black,
+    shapes: List<CropShape> = listOf(CircleCropShape),
+    aspects: List<AspectRatio> = listOf(AspectRatio(1, 1)),
     autoZoom: Boolean = true,
 ): CropperStyle = object : CropperStyle {
     override val touchRad: Dp get() = touchRad
     override val backgroundColor: Color get() = backgroundColor
     override val overlayColor: Color get() = overlay
-    override val shapes: List<CropShape> get() = listOf(CircleCropShape)
-    override val aspects get() = listOf(AspectRatio(1, 1))
+    override val shapes: List<CropShape> get() = shapes
+    override val aspects get() = aspects
     override val autoZoom: Boolean get() = autoZoom
-    override val handles: List<Offset> get() = AllHandles
 
     override fun DrawScope.drawCropRect(region: Rect) {
-        val circleStrokeWidthPx = circleStrokeWidth.toPx()
-
         drawOval(
             color = circleColor,
-            style = Stroke(circleStrokeWidthPx),
             topLeft = region.topLeft,
-            size = region.size
+            size = region.size,
+            style = Stroke(
+                width = circleStrokeWidth.toPx()
+            )
         )
 
+        val circleRegion = region.inflate(10.dp.toPx())
         val cornerLengthPx = cornerLength.toPx()
-        val cornerRegion = region.inflate(10.dp.toPx())
-
-        val left = cornerRegion.left
-        val top = cornerRegion.top
-        val right = cornerRegion.right
-        val bottom = cornerRegion.bottom
 
         listOf(
-            Offset(left, top) to Offset(1f, 1f),
-            Offset(right, top) to Offset(-1f, 1f),
-            Offset(left, bottom) to Offset(1f, -1f),
-            Offset(right, bottom) to Offset(-1f, -1f),
+            circleRegion.topLeft to Offset(1f, 1f),
+            circleRegion.topRight to Offset(-1f, 1f),
+            circleRegion.bottomLeft to Offset(1f, -1f),
+            circleRegion.bottomRight to Offset(-1f, -1f)
         ).forEach { (corner, dir) ->
-            drawCorner(
-                horizontal = Offset(corner.x, corner.y + dir.y * cornerLengthPx),
-                corner = corner,
-                vertical = Offset(corner.x + dir.x * cornerLengthPx, corner.y),
+            drawPath(
+                path = Path().apply {
+                    moveTo(corner.x + dir.x * cornerLengthPx, corner.y)
+                    lineTo(corner.x, corner.y)
+                    lineTo(corner.x, corner.y + dir.y * cornerLengthPx)
+                },
                 color = cornerColor,
-                strokeWidth = cornerStrokeWidth.toPx()
+                style = Stroke(
+                    width = cornerStrokeWidth.toPx()
+                )
             )
         }
     }
-}
 
-fun DrawScope.drawCorner(
-    horizontal: Offset,
-    corner: Offset,
-    vertical: Offset,
-    color: Color,
-    strokeWidth: Float,
-) {
-    drawPath(
-        path = Path().apply {
-            moveTo(horizontal.x, horizontal.y)
-            lineTo(corner.x, corner.y)
-            lineTo(vertical.x, vertical.y)
-        },
-        color = color,
-        style = Stroke(
-            width = strokeWidth
-        )
-    )
+    override val handles: List<Offset> = if (!secondaryHandles) MainHandles else AllHandles
 }
