@@ -1,5 +1,6 @@
 package com.hrconnect.android.presentation.candidate_detail.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -25,6 +27,7 @@ import com.attafitamim.krop.core.crop.rotLeft
 import com.attafitamim.krop.core.crop.rotRight
 import com.attafitamim.krop.ui.CropperPreview
 import com.hrconnect.android.R
+import com.hrconnect.uikit.common.theme.HrTheme
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 
@@ -51,7 +54,9 @@ fun HrImageCropperDialog(
             )
         ) {
             Column(
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
+                    .fillMaxWidth()
+                    .background(HrTheme.colorScheme.background)
             ) {
                 HrImageCropperTopBar(
                     onBackClick = {
@@ -68,6 +73,7 @@ fun HrImageCropperDialog(
                     CropperPreview(
                         modifier = Modifier
                             .fillMaxSize()
+                            .alpha(0.86f)
                             .hazeSource(hazeState),
                         state = state
                     )

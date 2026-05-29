@@ -46,14 +46,14 @@ fun hrCropperStyle(
             )
         )
 
-        val circleRegion = region.inflate(10.dp.toPx())
+        val cornerRegion = region.inflate(10.dp.toPx())
         val cornerLengthPx = cornerLength.toPx()
 
         listOf(
-            circleRegion.topLeft to Offset(1f, 1f),
-            circleRegion.topRight to Offset(-1f, 1f),
-            circleRegion.bottomLeft to Offset(1f, -1f),
-            circleRegion.bottomRight to Offset(-1f, -1f)
+            cornerRegion.topLeft to Offset(1f, 1f),
+            cornerRegion.topRight to Offset(-1f, 1f),
+            cornerRegion.bottomLeft to Offset(1f, -1f),
+            cornerRegion.bottomRight to Offset(-1f, -1f)
         ).forEach { (corner, dir) ->
             drawPath(
                 path = Path().apply {
