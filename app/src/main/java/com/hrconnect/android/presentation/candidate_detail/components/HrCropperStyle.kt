@@ -44,7 +44,6 @@ fun hrCropperStyle(
         )
 
         val cornerLengthPx = cornerLength.toPx()
-        val cornerStrokePx = cornerStrokeWidth.toPx()
         val cornerRegion = region.inflate(10.dp.toPx())
 
         val left = cornerRegion.left
@@ -52,34 +51,20 @@ fun hrCropperStyle(
         val right = cornerRegion.right
         val bottom = cornerRegion.bottom
 
-        drawCorner(
-            horizontal = Offset(left, top + cornerLengthPx),
-            corner = Offset(left, top),
-            vertical = Offset(left + cornerLengthPx, top),
-            color = cornerColor,
-            strokeWidth = cornerStrokePx
-        )
-        drawCorner(
-            horizontal = Offset(right - cornerLengthPx, top),
-            corner = Offset(right, top),
-            vertical = Offset(right, top + cornerLengthPx),
-            color = cornerColor,
-            strokeWidth = cornerStrokePx
-        )
-        drawCorner(
-            horizontal = Offset(left, bottom - cornerLengthPx),
-            corner = Offset(left, bottom),
-            vertical = Offset(left + cornerLengthPx, bottom),
-            color = cornerColor,
-            strokeWidth = cornerStrokePx
-        )
-        drawCorner(
-            horizontal = Offset(right - cornerLengthPx, bottom),
-            corner = Offset(right, bottom),
-            vertical = Offset(right, bottom - cornerLengthPx),
-            color = cornerColor,
-            strokeWidth = cornerStrokePx
-        )
+        listOf(
+            Offset(left, top) to Offset(1f, 1f),
+            Offset(right, top) to Offset(-1f, 1f),
+            Offset(left, bottom) to Offset(1f, -1f),
+            Offset(right, bottom) to Offset(-1f, -1f),
+        ).forEach { (corner, dir) ->
+            drawCorner(
+                horizontal = Offset(corner.x, corner.y + dir.y * cornerLengthPx),
+                corner = corner,
+                vertical = Offset(corner.x + dir.x * cornerLengthPx, corner.y),
+                color = cornerColor,
+                strokeWidth = cornerStrokeWidth.toPx()
+            )
+        }
     }
 }
 
